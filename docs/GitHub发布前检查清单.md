@@ -1,14 +1,14 @@
 # GitHub 发布前检查清单
 
-> 状态（2026-11-06 更新）：已执行 `git init -b main`，**尚未做任何 commit，尚未接远端**。初始化只做预览：`git status --short --untracked-files=all` 共 **109 个待入库文件**，最大单文件 349 KB（`experiments/ufno_uq_report_500.json`），无 >5 MB 文件，全部远低于 GitHub 100 MB 硬上限。
-> 下面按"阻断项 → 隐私项 → 质量项 → 执行步骤"排列。标 **决策** 的必须你拍板，我不能替你选。
-> 撤销这次初始化：`rm -rf .git`（不影响任何工作文件）。
+> 状态（2026-11-06 更新）：**已 `git init -b main` 并完成首次 commit（120 个文件，`.git` 4.6 MB，工作区干净），仍未接远端、未 push。**
+> 下面按"阻断项 → 隐私项 → 质量项 → 执行步骤"排列。标 **决策 / ⚠️** 的必须你拍板，我不能替你选。
+> 撤销这次提交（回到未提交状态）：`git reset --soft HEAD^`；连仓库一起撤掉：`rm -rf .git`。
 
 ---
 
 ## 一、阻断项（不解决就别 publish）
 
-### 1. 上游代码许可与我们的 MIT 冲突 ⚠️ 决策
+### 1. 上游代码许可与我们的 MIT 冲突 ⚠️ 仍未解（转 public 前必须处理）
 
 `repro/ufno/` 是 `github.com/gegewen/ufno` 的**完整 clone**（固定在 commit `8315fd7b5bd75282b7efe42ee6b8de86543d13cc`），其中 `ufno.py`、`lploss.py`、四个 `.ipynb`、`LICENSE`、`README.md` 都是上游文件，上游许可是：
 
@@ -31,11 +31,19 @@ Attribution-NonCommercial-NoDerivatives 4.0 International  (CC BY-NC-ND 4.0)
 
 补充：`数据集/sg_*.pt` 来自同一篇论文，**本来就不入库**（31 GB，且许可未确认），这条我们已经做对了。
 
-### 2. 嵌套 `.git` 会让别人 clone 到空目录 ⚠️ 决策
+### 2. 嵌套 `.git` 会让别人 clone 到空目录 ✅ 已处理（2026-11-06）
 
-`repro/ufno/.git` 是真实的上游仓库。外层 `git add .` 会把它记成 gitlink（submodule 引用），但没有 `.gitmodules` → 协作者 clone 后 `repro/ufno/` 是空的。
-处理：选方案 A 就顺手删掉整个 `repro/ufno/`（上游文件 + 嵌套 `.git`）；选 B/C 则删 `repro/ufno/.git` 目录，把文件作为 vendored 副本入库，并在 NOTICE 里写死 commit hash。
-**删除动作我不会自己做**，需要你说"删"。
+`repro/ufno/.git` 是真实的上游仓库，实测 `git add repro/ufno/ufno.py` 会**静默不收录**（外层 git 把该目录当 submodule 边界）。
+处理方式（**未删除任何东西**）：`mv repro/ufno/.git repro/ufno/.upstream_git_backup`，并把该目录加进 `.gitignore`。
+这样上游 8 个文件作为普通 blob 入库，clone 方不再拿到空目录；需要还原上游 git 历史时一条命令改回来：
+
+```bash
+mv repro/ufno/.upstream_git_backup repro/ufno/.git
+```
+
+上游文件与本项目的三个自写脚本（`eval_ufno_gas_saturation.py`、`train_ufno_gas_saturation.py`、`ufno_reader.py`）
+已逐文件写进 [`NOTICE`](../NOTICE)。**阻断项 1 的 ND 问题依然在**：后两个脚本是上游 notebook 的转录/改动版，
+ND 条款下不能公开再分发，转 public 前要么拿到作者书面许可，要么把这 8+3 个文件一起从公开仓库里摘掉。
 
 ### 3. 130 MB 文件会被 GitHub 直接拒绝
 
@@ -79,8 +87,8 @@ GitHub 单文件硬上限 100 MB：`experiments/ufno_pred.npz` = **130 MB**（�
 4. ✅ **测试已实跑**：`pytest tests/test_uq_risk.py -q` → **23 passed in 0.91 s**，不需要 GPU、不需要数据集。README §4 已明说这句话。
 5. **缺 `CHANGELOG`**。"已知边界"这节已经写进 README §7 了（机制 2/3 无几何输入、逐场地覆盖长尾 12.4%、时间轴不可外推、泛化边界=训练参数分布、不宣称加速倍数），CHANGELOG 要不要补是**决策**。
 6. `.gitignore` 现在覆盖：`数据集/`、`data/*.npz`、`models/*.pt`、`experiments/*.npz`、`experiments/*.pt`、`experiments/_*.log`、`tools/_*.log`、`docs/_*.txt`、`__pycache__/`、`*.pyc`、`.ipynb_checkpoints/`、`.venv/`、`.env`、`.pytest_cache/`、`results/*.png|pdf`。
-   **本轮实测纠正**：gitignore 的 `*` 不跨 `/`，所以 `results/*.png` **管不到** `results/ufno_uq/*.png` —— `git status` 确认 9 张真实数据图 + 2 张结构图（合计约 1.7 MB）**会被入库**。这恰好是"图入库、数据不入库"，README 能直接嵌图；如果你认可就维持现状，不用改 ignore（**决策，默认不动**）。
-7. `repro/ufno/` 在 `git status` 里显示为**单条 `repro/ufno/`**，`git add` 会给出 "adding embedded git repository" 警告并记成 gitlink。这正是阻断项 2 的现场证据，clone 方拿到的是空目录。
+   **本轮实测纠正**：gitignore 的 `*` 不跨 `/`，所以 `results/*.png` **管不到** `results/ufno_uq/*.png` —— 9 张真实数据图 + 2 张结构图（约 1.7 MB）已随首次 commit 入库，README 能直接嵌图（已定：图入库）。
+7. ~~`repro/ufno/` 在 `git status` 里显示为单条 `repro/ufno/`，会被记成 gitlink。~~ → 已按 §一.2 处理，上游 8 个文件 + 我们 3 个脚本已作为普通 blob 入库。
 
 ---
 
@@ -94,26 +102,43 @@ git status --short --untracked-files=all      :: 109 个待入库文件，逐条
 git add --dry-run repro/ufno                  :: 触发 embedded git repository 警告，证据见 §三.7
 ```
 
-待你拍板后再做：
+首次 commit（已完成，工作区干净）：
 
 ```bat
-git add .gitignore README.md LICENSE CONTRIBUTING.md requirements.txt requirements-hifi.txt requirements-lock.txt conftest.py
-git add src tools tests sim docs data results experiments conftest.py
-git status --short            :: 逐行确认没有 数据集/、*.npz、*.log
-git commit -m "..."
+git add -A
+git commit              :: 用环境变量临时身份提交，未改 git config
 ```
 
-然后：
+提交后自查（已跑过，结果见下）：
 
-1. `git log --stat` 自查一次，再用 `git ls-files | xargs grep -l "<本机用户名>\|C:\\Users"` 做**提交后**的泄露复查（这一步能抓出漏网的二进制转文本）。本轮已用同样口径扫过待入库集合：**命中 0 个 `<本机用户名>` / `C:\Users`**，只有第三方邮箱（在 `docs/archive/`）和通用 `C:/workplace` 路径。
-2. 建远端仓库、push —— **这两步我不会自己执行**，需要你明确说"推"，并且建议先推到一个 private 仓库看一眼渲染效果再转 public。
-3. 发布后 README 里补：上游引用（Wen et al. 2022 + `gegewen/ufno` commit `8315fd7b5bd75282b7efe42ee6b8de86543d13cc`）、数据集获取方式、许可声明。README §10 已按"上游 CC BY-NC-ND 4.0、再分发方式确认中"写了过渡口径，选完 A/B/C 要回来改这一段。
+```bash
+git ls-files | xargs grep -l "<你的本机用户名>\|<你的邮箱前缀>\|C:..Users"    # 命中 0（模式自己填，本档不留）
+git ls-tree -r -l HEAD | sort -k4 -n -r | head                   # 最大 blob 1.45 MB
+```
+
+实测结果：
+
+- **120 个文件、26,079 行、`.git` 4.6 MB**；最大 5 个 blob 依次是 `docs/CCUS项目介绍.pptx` 1.45 MB、`docs/U-FNO模型拆解.pptx` 352 KB、`experiments/ufno_uq_report_500.json` 331 KB、`fig8` 330 KB、`fig5` 325 KB。
+- 提交内容里 **本机用户名 / QQ 号 / 私人邮箱路径 命中 0**；剩两处 `C:/workplace/...` 是通用项目路径（不含用户名），第三方邮箱已全部脱敏。
+- `数据集/`、`*.npz`、`*.log`、`.venv/`、`__pycache__/`、`repro/ufno/.upstream_git_backup/` 均**未进 commit**（逐条查过）。
+- ⚠️ **作者身份是占位值**：这两条 commit 用的是 `ccus-ai-surrogate <placeholder@invalid>`，**不是**你 git 全局配置里那条"本机用户名 + 私人邮箱"（`git config user.email` 可查）。原因是私人邮箱一进公开仓库就会被爬虫收走。要署名成你自己的 GitHub 身份，在 push 之前跑（`-c` 只作用于这一条命令，不改配置）：
+
+```bash
+git -c user.name="你的名字" -c user.email="数字ID+用户名@users.noreply.github.com" \
+    commit --amend --reset-author --no-edit
+```
+
+下一步（需要你的 GitHub 账号，我不会自己执行）：
+
+1. 在 GitHub 上建一个**空**仓库（不要勾选自动生成 README/.gitignore），建议 **private**。
+2. 认证：本机没装 `gh` CLI，所以走 `git remote add origin https://github.com/<你>/<仓库>.git` 后 push，
+   浏览器会弹 GitHub 登录授权；纯命令行则需要在 GitHub 上生成 Personal Access Token（scope 勾 `repo`）当密码用。
+3. 先看 README 渲染效果，再决定转 public；**转 public 前必须先解决阻断项 1 的 ND 许可**。
+4. 上游引用、数据集获取方式、许可声明已经写进 README §6/§10 与 `NOTICE`，转 public 时复查一遍。
 
 ---
 
-## 五、还差三个决策（git init 我已经做了，commit 没做）
+## 五、剩下两件事
 
-- 上游代码走 **A / B / C** 哪个方案？（A = 不发布上游文件，推荐）
-- 演示用 npz：**不入库 + 一条命令再生成**（README §4 已经是这个写法），还是 **Git LFS**？
-- `results/ufno_uq/*.png`：**照现状入库**（图 1.7 MB，README 能嵌图，推荐），还是改 ignore 不入库？
-- 补一条：**首次 commit 现在做吗**（只本地 commit，不 push）？以及 `docs/archive/` 里那两处第三方邮箱要不要脱敏？
+1. **`experiments_smoke.json`** 已经跟着这次 commit 进了仓库（内容见隐私项表那一行）。要删要挪，等你一句话——删的话我顺手补一条 `git rm` commit，push 之前删掉就没有历史痕迹。
+2. **演示用 npz 仍未入库**（`ufno_uq_500.npz` 29 MB / `ufno_pred.npz` 130 MB）。130 MB 那个 GitHub 直接拒收，没法入库；29 MB 那个如果你希望"clone 完就能跑 Streamlit"，可以走 Git LFS 或普通入库（<100 MB 是允许的，只是仓库会胖 30 MB）。现在的口径是"一条命令再生成"（README §4 第 ⑥ 步）。

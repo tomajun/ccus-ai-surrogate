@@ -87,6 +87,27 @@ streamlit run src/app/streamlit_app.py
 | 场地排序能力 | Spearman = **0.984**（预测综合分 vs 真值综合分） | 筛查排序用途的核心指标 |
 | 端到端耗时 | 单场地 ≈**5.0 s**；500 场地 41 分钟 | 推理 + 8 副本 + 校准 + 判级 + 可靠性扫描 |
 
+### 五张关键图（`tools/make_figures.py` 读上面两个 json/npz 生成）
+
+预测 vs 真值（500 场地逐场地）——离对角线越近越准，长尾在低能量场地：
+
+![预测 vs 真值](results/ufno_uq/fig1_scatter_pred_vs_truth.png)
+
+残差分布——误差集中在羽流前缘，体部接近零：
+
+![残差分布](results/ufno_uq/fig2_residual_distribution.png)
+
+可靠性扫描——名义 90% 覆盖率与经验覆盖率的差距，是"区间能不能信"的直接证据：
+
+![可靠性](results/ufno_uq/fig7_reliability.png)
+
+单场地逐格区间带 + 羽流随时间演化——可视化"模型知道自己不确定在哪"：
+
+![区间带](results/ufno_uq/fig5_band_coverage_site0.png)
+![羽流演化](results/ufno_uq/fig8_field_evolution_site0.png)
+
+判级混淆矩阵（点预测口径 vs 真值口径）与三轴时间轴见 `results/ufno_uq/fig9_tier_confusion.png`、`fig6_timeline_axes.png`。
+
 ## 6. 数据与许可边界
 
 - 仓库**不含**任何真实涉密数据，也**不含** U-FNO 官方 `.pt` 大文件（≈20 GB，许可条款待确认，见 `docs/GitHub发布前检查清单.md`）。
