@@ -1,0 +1,12 @@
+{
+  "uq": "deep_ensemble",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "mean_entropy": 0.6,
+  "risk_high_entropy_ratio": 0.4516
+}

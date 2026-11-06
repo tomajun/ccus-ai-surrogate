@@ -1,0 +1,2208 @@
+{
+  "n_sites": 100,
+  "replicas": 8,
+  "alpha": 0.1,
+  "seed": 20261030,
+  "device": "cuda:0",
+  "perturb": {
+    "log_perm_sigma": 0.04,
+    "porosity_sigma": 0.01,
+    "inj_rate_rel": 0.05,
+    "swi_sigma": 0.01,
+    "lambda_sigma": 0.02,
+    "corr_len_cells": 8
+  },
+  "rel_l2_point_estimate": 0.06827900923788548,
+  "rel_l2_if_mc_mean_used": 0.09708774458616971,
+  "field_band": {
+    "operating_kappa": 1.4013533267649287,
+    "scope": "plume",
+    "min_band": 0.01,
+    "plume_cell_share_of_reservoir": 0.14717055189472805,
+    "picp_cal": 0.9016594021823203,
+    "picp_eval": 0.9209960608610299,
+    "mpiw_eval": 0.11029301765486968,
+    "variants": {
+      "pooled_reservoir": {
+        "kappa": 0.18641691453814416,
+        "picp_reservoir": 0.9067059655193914,
+        "mpiw_reservoir": 0.005352202137773372,
+        "picp_plume": 0.3674368217626808,
+        "mpiw_plume": 0.014671877287212375
+      },
+      "pooled_plume": {
+        "kappa": 1.4013533267649287,
+        "picp_reservoir": 0.9881554300054182,
+        "mpiw_reservoir": 0.040234150907762084,
+        "picp_plume": 0.9209960608610299,
+        "mpiw_plume": 0.11029301765486968
+      },
+      "per_site_strict": {
+        "kappa": 8.75,
+        "picp_reservoir": 0.9998295748028015,
+        "mpiw_reservoir": 0.2512205977743206,
+        "picp_plume": 0.9984484695567606,
+        "mpiw_plume": 0.6886656534422992
+      }
+    },
+    "uncalibrated_kappa_1": {
+      "picp_reservoir": 0.978346282982782,
+      "mpiw_reservoir": 0.028710925459922355,
+      "picp_plume": 0.8558043963387156,
+      "mpiw_plume": 0.07870464610769135
+    },
+    "n_cal": 60,
+    "n_eval": 40
+  },
+  "reliability": [
+    {
+      "nominal": 0.5,
+      "kappa": 0.3205,
+      "picp_eval": 0.5178,
+      "mpiw_eval": 0.02523
+    },
+    {
+      "nominal": 0.6,
+      "kappa": 0.4455,
+      "picp_eval": 0.6216,
+      "mpiw_eval": 0.03506
+    },
+    {
+      "nominal": 0.7,
+      "kappa": 0.6141,
+      "picp_eval": 0.7226,
+      "mpiw_eval": 0.04833
+    },
+    {
+      "nominal": 0.8,
+      "kappa": 0.8751,
+      "picp_eval": 0.8229,
+      "mpiw_eval": 0.06887
+    },
+    {
+      "nominal": 0.85,
+      "kappa": 1.0803,
+      "picp_eval": 0.8729,
+      "mpiw_eval": 0.08502
+    },
+    {
+      "nominal": 0.9,
+      "kappa": 1.4014,
+      "picp_eval": 0.921,
+      "mpiw_eval": 0.11029
+    },
+    {
+      "nominal": 0.95,
+      "kappa": 2.0659,
+      "picp_eval": 0.9663,
+      "mpiw_eval": 0.1626
+    },
+    {
+      "nominal": 0.99,
+      "kappa": 4.6796,
+      "picp_eval": 0.9954,
+      "mpiw_eval": 0.3683
+    }
+  ],
+  "indicator_conformal": {
+    "q": {
+      "breakthrough": 427.3658303344462,
+      "areal": 0.019080681985564868,
+      "lateral": 0.02401828712438273
+    },
+    "picp_eval": {
+      "breakthrough": 0.9,
+      "areal": 0.95,
+      "lateral": 0.925
+    },
+    "q_mondrian": {
+      "breakthrough": {
+        "0": 427.3658303344462,
+        "1": 303.0668145762718,
+        "2": 1165.374807085863
+      },
+      "areal": {
+        "0": 0.019080681985564868,
+        "1": 0.02138357843137254,
+        "2": 0.021028985507246394
+      },
+      "lateral": {
+        "0": 0.02401828712438273,
+        "1": 0.030979318466837977,
+        "2": 0.030743545621521425
+      }
+    }
+  },
+  "axis_diagnostics": {
+    "breakthrough": {
+      "nan_share": 0.02,
+      "n_finite": 98,
+      "min": 1.0,
+      "p50": 31.289380209843582,
+      "max": 10950.29694765973,
+      "tied_at_min_share": 0.3469387755102041,
+      "tied_at_max_share": 0.030612244897959183
+    },
+    "areal": {
+      "nan_share": 0.0,
+      "n_finite": 100,
+      "min": 0.06126373626373626,
+      "p50": 0.3540833333333333,
+      "max": 0.5231818181818182,
+      "tied_at_min_share": 0.01,
+      "tied_at_max_share": 0.01
+    },
+    "lateral": {
+      "nan_share": 0.0,
+      "n_finite": 100,
+      "min": 0.08848252470137148,
+      "p50": 0.13542320212779152,
+      "max": 0.28476084538375973,
+      "tied_at_min_share": 0.01,
+      "tied_at_max_share": 0.01
+    },
+    "composite_score": {
+      "min": 0.15550000000000003,
+      "p50": 0.5197499999999999,
+      "max": 0.8220000000000001
+    }
+  },
+  "tiers": {
+    "interval": {
+      "green": 28,
+      "yellow": 72,
+      "red": 0
+    },
+    "point": {
+      "green": 65,
+      "yellow": 20,
+      "red": 15
+    },
+    "truth_oracle": {
+      "green": 75,
+      "yellow": 15,
+      "red": 10
+    },
+    "decisive_share_interval": 0.28,
+    "decisive_share_point": 0.8,
+    "agreement_interval_vs_truth": 0.43,
+    "agreement_point_vs_truth": 0.85,
+    "spearman_score_pred_vs_truth": 0.9802460246024602,
+    "spearman_weight_grid_min": 0.9655925592559255,
+    "policy": {
+      "red_pct": 0.9,
+      "yellow_pct": 0.75,
+      "low_conf_pct": 0.9,
+      "weights": {
+        "breakthrough": 0.45,
+        "areal": 0.35,
+        "lateral": 0.2
+      }
+    }
+  },
+  "indicators_pred": [
+    {
+      "breakthrough_days": 460.53920311505374,
+      "ratio_peak": 0.40942307692307695,
+      "ratio_mean": 0.1843589743589744,
+      "growth_slope": 0.24971153846153848,
+      "lateral_share": 0.10069130112747922,
+      "outside_share": 0.05324664636655419,
+      "violation_share": 0.3881570512820513,
+      "violation_l1": 9.534517630527262e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.33232954545454546,
+      "ratio_mean": 0.11098958333333335,
+      "growth_slope": 0.2554545454545455,
+      "lateral_share": 0.12755428522673948,
+      "outside_share": 0.0,
+      "violation_share": 0.39494554924242425,
+      "violation_l1": 5.6947474149637856e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4714285714285714,
+      "ratio_mean": 0.23279761904761906,
+      "growth_slope": 0.25142857142857145,
+      "lateral_share": 0.13881917844406289,
+      "outside_share": 0.6556157266763527,
+      "violation_share": 0.3560714285714286,
+      "violation_l1": 7.4825534284173045e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.1154054054054054,
+      "ratio_mean": 0.08338119369369369,
+      "growth_slope": 0.01881756756756757,
+      "lateral_share": 0.16532841911280768,
+      "outside_share": 0.02537185731209688,
+      "violation_share": 0.4574577702702703,
+      "violation_l1": 1.0873296560021117e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.5055555555555555,
+      "ratio_mean": 0.24828703703703703,
+      "growth_slope": 0.2708333333333333,
+      "lateral_share": 0.11263741190395064,
+      "outside_share": 0.8076502340261463,
+      "violation_share": 0.3591435185185185,
+      "violation_l1": 5.8059194998349994e-06
+    },
+    {
+      "breakthrough_days": 4.4411823500250005,
+      "ratio_peak": 0.40555555555555556,
+      "ratio_mean": 0.19854166666666664,
+      "growth_slope": 0.21555555555555556,
+      "lateral_share": 0.1668735707285201,
+      "outside_share": 0.4395949036262659,
+      "violation_share": 0.36953703703703705,
+      "violation_l1": 1.3741362636210397e-05
+    },
+    {
+      "breakthrough_days": 11.392155107087303,
+      "ratio_peak": 0.5304545454545454,
+      "ratio_mean": 0.26984848484848484,
+      "growth_slope": 0.2661363636363636,
+      "lateral_share": 0.11354659575300145,
+      "outside_share": 0.7214031520081342,
+      "violation_share": 0.33539772727272726,
+      "violation_l1": 9.282345672545489e-06
+    },
+    {
+      "breakthrough_days": 460.53920311505374,
+      "ratio_peak": 0.30944444444444447,
+      "ratio_mean": 0.11482253086419754,
+      "growth_slope": 0.2239351851851852,
+      "lateral_share": 0.08665046509679042,
+      "outside_share": 0.16863599541886645,
+      "violation_share": 0.44312114197530866,
+      "violation_l1": 1.2337841326370835e-05
+    },
+    {
+      "breakthrough_days": 111.08109738040663,
+      "ratio_peak": 0.102375,
+      "ratio_mean": 0.061453125,
+      "growth_slope": 0.038718749999999996,
+      "lateral_share": 0.17210620649410197,
+      "outside_share": 0.016381142928598224,
+      "violation_share": 0.4640052083333333,
+      "violation_l1": 1.7651356756687164e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.2876881720430107,
+      "ratio_mean": 0.09665770609318997,
+      "growth_slope": 0.22706989247311826,
+      "lateral_share": 0.11831371094836377,
+      "outside_share": 0.0,
+      "violation_share": 0.4072670250896057,
+      "violation_l1": 6.321230557659874e-06
+    },
+    {
+      "breakthrough_days": 655.5390397312545,
+      "ratio_peak": 0.39295180722891565,
+      "ratio_mean": 0.15475401606425704,
+      "growth_slope": 0.27316265060240963,
+      "lateral_share": 0.12024895862035431,
+      "outside_share": 0.000696954471043973,
+      "violation_share": 0.34547439759036147,
+      "violation_l1": 6.158438282000134e-06
+    },
+    {
+      "breakthrough_days": 1886.379609218323,
+      "ratio_peak": 0.3612328767123288,
+      "ratio_mean": 0.1396261415525114,
+      "growth_slope": 0.25815068493150684,
+      "lateral_share": 0.1388419921725117,
+      "outside_share": 0.061372880055252856,
+      "violation_share": 0.39237157534246575,
+      "violation_l1": 8.943505235947669e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.18375,
+      "ratio_mean": 0.11950520833333333,
+      "growth_slope": 0.05156249999999998,
+      "lateral_share": 0.16124636065167564,
+      "outside_share": 0.43145635879328503,
+      "violation_share": 0.4323828125,
+      "violation_l1": 2.1183303033467382e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.36572916666666666,
+      "ratio_mean": 0.1497092013888889,
+      "growth_slope": 0.24231770833333333,
+      "lateral_share": 0.15665497347287854,
+      "outside_share": 0.0,
+      "violation_share": 0.28094618055555554,
+      "violation_l1": 9.366724952997174e-06
+    },
+    {
+      "breakthrough_days": 2.421245,
+      "ratio_peak": 0.2426470588235294,
+      "ratio_mean": 0.1549264705882353,
+      "growth_slope": 0.0763235294117647,
+      "lateral_share": 0.1402891873048592,
+      "outside_share": 0.2335627027190882,
+      "violation_share": 0.4568811274509804,
+      "violation_l1": 1.2161120139353443e-05
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.2686065573770492,
+      "ratio_mean": 0.13065232240437158,
+      "growth_slope": 0.15168032786885247,
+      "lateral_share": 0.13744700651432118,
+      "outside_share": 0.011089856271326647,
+      "violation_share": 0.43910860655737705,
+      "violation_l1": 8.2676569945761e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4330769230769231,
+      "ratio_mean": 0.1971153846153846,
+      "growth_slope": 0.2530769230769231,
+      "lateral_share": 0.12612050127101637,
+      "outside_share": 0.7257280470945012,
+      "violation_share": 0.4169871794871795,
+      "violation_l1": 9.732078979141079e-06
+    },
+    {
+      "breakthrough_days": 655.5390397312545,
+      "ratio_peak": 0.31246153846153846,
+      "ratio_mean": 0.12253846153846154,
+      "growth_slope": 0.21676923076923077,
+      "lateral_share": 0.17940070047995849,
+      "outside_share": 0.008120378778051628,
+      "violation_share": 0.40633974358974356,
+      "violation_l1": 7.164814633142669e-06
+    },
+    {
+      "breakthrough_days": 655.5390397312545,
+      "ratio_peak": 0.3608602150537634,
+      "ratio_mean": 0.14271281362007168,
+      "growth_slope": 0.2492741935483871,
+      "lateral_share": 0.14091869473354723,
+      "outside_share": 0.002942327255653807,
+      "violation_share": 0.415905017921147,
+      "violation_l1": 7.981030648807064e-06
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.062142857142857146,
+      "ratio_mean": 0.03953067765567765,
+      "growth_slope": 0.016483516483516487,
+      "lateral_share": 0.23183370968675815,
+      "outside_share": 0.00023160210757917896,
+      "violation_share": 0.569720695970696,
+      "violation_l1": 1.210489972436335e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.353125,
+      "ratio_mean": 0.14385416666666667,
+      "growth_slope": 0.23062500000000002,
+      "lateral_share": 0.13378291267912928,
+      "outside_share": 0.8630435860564288,
+      "violation_share": 0.33533854166666666,
+      "violation_l1": 5.664109721692512e-06
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.3943421052631579,
+      "ratio_mean": 0.17134868421052632,
+      "growth_slope": 0.24414473684210525,
+      "lateral_share": 0.13664987405541562,
+      "outside_share": 0.14428868689081153,
+      "violation_share": 0.37432291666666667,
+      "violation_l1": 5.754330231866334e-06
+    },
+    {
+      "breakthrough_days": 37.14607582160347,
+      "ratio_peak": 0.1835593220338983,
+      "ratio_mean": 0.1248340395480226,
+      "growth_slope": 0.04368644067796609,
+      "lateral_share": 0.1611104854150242,
+      "outside_share": 0.004589480797387093,
+      "violation_share": 0.43671963276836157,
+      "violation_l1": 1.1163309864059556e-05
+    },
+    {
+      "breakthrough_days": 158.87345424641603,
+      "ratio_peak": 0.405,
+      "ratio_mean": 0.1720482456140351,
+      "growth_slope": 0.2592105263157895,
+      "lateral_share": 0.12885715372810633,
+      "outside_share": 0.0049843367534592314,
+      "violation_share": 0.38368859649122805,
+      "violation_l1": 7.99831104814075e-06
+    },
+    {
+      "breakthrough_days": 37.14607582160347,
+      "ratio_peak": 0.3660344827586207,
+      "ratio_mean": 0.13633860153256705,
+      "growth_slope": 0.263448275862069,
+      "lateral_share": 0.108615087380346,
+      "outside_share": 0.0,
+      "violation_share": 0.40817528735632186,
+      "violation_l1": 7.820636710675899e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.54,
+      "ratio_mean": 0.2884583333333333,
+      "growth_slope": 0.261,
+      "lateral_share": 0.11640962122422886,
+      "outside_share": 0.8616949017100847,
+      "violation_share": 0.238375,
+      "violation_l1": 1.8947206626762636e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.38069767441860464,
+      "ratio_mean": 0.16434108527131783,
+      "growth_slope": 0.2382267441860465,
+      "lateral_share": 0.15298548645218255,
+      "outside_share": 0.064069311848132,
+      "violation_share": 0.3449636627906977,
+      "violation_l1": 5.8253172028344125e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.23102739726027396,
+      "ratio_mean": 0.08078767123287671,
+      "growth_slope": 0.17092465753424657,
+      "lateral_share": 0.11840816897468177,
+      "outside_share": 0.010071338648762064,
+      "violation_share": 0.4526940639269406,
+      "violation_l1": 1.6050606063799933e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.37125,
+      "ratio_mean": 0.19200520833333334,
+      "growth_slope": 0.18921875000000005,
+      "lateral_share": 0.1454692121538048,
+      "outside_share": 0.2069911266469481,
+      "violation_share": 0.42462239583333333,
+      "violation_l1": 1.8007403923547827e-05
+    },
+    {
+      "breakthrough_days": 53.79367453107483,
+      "ratio_peak": 0.36953703703703705,
+      "ratio_mean": 0.136508487654321,
+      "growth_slope": 0.26625,
+      "lateral_share": 0.1354338056531028,
+      "outside_share": 0.13108715404827975,
+      "violation_share": 0.4337229938271605,
+      "violation_l1": 7.701540198468138e-06
+    },
+    {
+      "breakthrough_days": 77.45399095891744,
+      "ratio_peak": 0.42863636363636365,
+      "ratio_mean": 0.19406439393939393,
+      "growth_slope": 0.25213636363636366,
+      "lateral_share": 0.12515267486361045,
+      "outside_share": 0.165654262682192,
+      "violation_share": 0.3867083333333333,
+      "violation_l1": 1.0767033018055372e-05
+    },
+    {
+      "breakthrough_days": 2.421245,
+      "ratio_peak": 0.3575,
+      "ratio_mean": 0.1779375,
+      "growth_slope": 0.182,
+      "lateral_share": 0.17056952876553919,
+      "outside_share": 0.38269731136166524,
+      "violation_share": 0.40960416666666666,
+      "violation_l1": 1.711549521132838e-05
+    },
+    {
+      "breakthrough_days": 2.421245,
+      "ratio_peak": 0.37066265060240966,
+      "ratio_mean": 0.12275100401606426,
+      "growth_slope": 0.2859638554216868,
+      "lateral_share": 0.10571083893921115,
+      "outside_share": 6.134091234383625e-05,
+      "violation_share": 0.4344703815261044,
+      "violation_l1": 9.29773068492068e-06
+    },
+    {
+      "breakthrough_days": 3812.7898739856546,
+      "ratio_peak": 0.4251785714285714,
+      "ratio_mean": 0.16048363095238094,
+      "growth_slope": 0.3083035714285714,
+      "lateral_share": 0.11755401157319344,
+      "outside_share": 0.5681276655387142,
+      "violation_share": 0.36748511904761905,
+      "violation_l1": 7.882774298195727e-06
+    },
+    {
+      "breakthrough_days": 77.45399095891744,
+      "ratio_peak": 0.2547872340425532,
+      "ratio_mean": 0.09381648936170213,
+      "growth_slope": 0.18281914893617024,
+      "lateral_share": 0.20623671155209072,
+      "outside_share": 0.0,
+      "violation_share": 0.4273515070921986,
+      "violation_l1": 7.3153596531483345e-06
+    },
+    {
+      "breakthrough_days": 25.432684598083696,
+      "ratio_peak": 0.3595731707317073,
+      "ratio_mean": 0.15522103658536587,
+      "growth_slope": 0.22530487804878047,
+      "lateral_share": 0.15993391035454974,
+      "outside_share": 0.07391126404026012,
+      "violation_share": 0.39952489837398375,
+      "violation_l1": 9.672337910160422e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4946153846153846,
+      "ratio_mean": 0.24695512820512822,
+      "growth_slope": 0.2611538461538462,
+      "lateral_share": 0.11318464046619724,
+      "outside_share": 0.7327343993895036,
+      "violation_share": 0.3479326923076923,
+      "violation_l1": 7.415808340738295e-06
+    },
+    {
+      "breakthrough_days": 10950.29694765973,
+      "ratio_peak": 0.3623529411764706,
+      "ratio_mean": 0.12010723039215687,
+      "growth_slope": 0.27827205882352946,
+      "lateral_share": 0.12542985964286624,
+      "outside_share": 0.0013755508571719694,
+      "violation_share": 0.420640318627451,
+      "violation_l1": 1.3969540304969996e-05
+    },
+    {
+      "breakthrough_days": 7.312008209061283,
+      "ratio_peak": 0.3728205128205128,
+      "ratio_mean": 0.1366025641025641,
+      "growth_slope": 0.27749999999999997,
+      "lateral_share": 0.10998889351659032,
+      "outside_share": 0.11245314452311538,
+      "violation_share": 0.4412393162393162,
+      "violation_l1": 6.047705483069876e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4275,
+      "ratio_mean": 0.19752604166666665,
+      "growth_slope": 0.2465625,
+      "lateral_share": 0.1250689084895259,
+      "outside_share": 0.8257763689819919,
+      "violation_share": 0.30463541666666666,
+      "violation_l1": 5.1679362513823435e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.33111111111111113,
+      "ratio_mean": 0.1815740740740741,
+      "growth_slope": 0.15097222222222223,
+      "lateral_share": 0.14503668432048977,
+      "outside_share": 0.2377435498760993,
+      "violation_share": 0.40350694444444446,
+      "violation_l1": 2.453027445881162e-05
+    },
+    {
+      "breakthrough_days": 11.392155107087303,
+      "ratio_peak": 0.4144186046511628,
+      "ratio_mean": 0.18807170542635657,
+      "growth_slope": 0.23976744186046514,
+      "lateral_share": 0.11778045608804592,
+      "outside_share": 0.3844080053284278,
+      "violation_share": 0.37108042635658917,
+      "violation_l1": 5.747921477450291e-06
+    },
+    {
+      "breakthrough_days": 77.45399095891744,
+      "ratio_peak": 0.08012048192771085,
+      "ratio_mean": 0.0563504016064257,
+      "growth_slope": 0.009668674698795177,
+      "lateral_share": 0.17348012983595051,
+      "outside_share": 0.015264496885691727,
+      "violation_share": 0.49413654618473896,
+      "violation_l1": 1.389717454003403e-05
+    },
+    {
+      "breakthrough_days": 932.681582522847,
+      "ratio_peak": 0.27492647058823527,
+      "ratio_mean": 0.13330575980392156,
+      "growth_slope": 0.1800735294117647,
+      "lateral_share": 0.1030314699527202,
+      "outside_share": 0.06914404295830391,
+      "violation_share": 0.4607015931372549,
+      "violation_l1": 1.2414724551490508e-05
+    },
+    {
+      "breakthrough_days": 3812.7898739856546,
+      "ratio_peak": 0.435,
+      "ratio_mean": 0.17281446540880505,
+      "growth_slope": 0.29995283018867924,
+      "lateral_share": 0.10752551560581036,
+      "outside_share": 0.0690721212891204,
+      "violation_share": 0.40367138364779875,
+      "violation_l1": 8.74536362971412e-06
+    },
+    {
+      "breakthrough_days": 655.5390397312545,
+      "ratio_peak": 0.3770731707317073,
+      "ratio_mean": 0.15333079268292682,
+      "growth_slope": 0.25420731707317074,
+      "lateral_share": 0.13889301083246772,
+      "outside_share": 0.004946332294603551,
+      "violation_share": 0.2978760162601626,
+      "violation_l1": 7.187442861322779e-06
+    },
+    {
+      "breakthrough_days": 226.79810248044757,
+      "ratio_peak": 0.45425925925925925,
+      "ratio_mean": 0.20530864197530865,
+      "growth_slope": 0.2675925925925926,
+      "lateral_share": 0.11957476560119037,
+      "outside_share": 0.5229916996826877,
+      "violation_share": 0.36375,
+      "violation_l1": 7.681373062951025e-06
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.186,
+      "ratio_mean": 0.06899444444444446,
+      "growth_slope": 0.13416666666666666,
+      "lateral_share": 0.15116933215462508,
+      "outside_share": 0.0019287953065980873,
+      "violation_share": 0.46881388888888886,
+      "violation_l1": 1.0159669727727305e-05
+    },
+    {
+      "breakthrough_days": 2682.0075877034956,
+      "ratio_peak": 0.4057142857142857,
+      "ratio_mean": 0.15579365079365082,
+      "growth_slope": 0.29678571428571426,
+      "lateral_share": 0.11497692346705889,
+      "outside_share": 0.20352994877516864,
+      "violation_share": 0.42357473544973545,
+      "violation_l1": 7.30761621525744e-06
+    },
+    {
+      "breakthrough_days": 158.87345424641603,
+      "ratio_peak": 0.44642857142857145,
+      "ratio_mean": 0.19370833333333334,
+      "growth_slope": 0.2686428571428572,
+      "lateral_share": 0.1045427750350011,
+      "outside_share": 0.4005047527816668,
+      "violation_share": 0.40894642857142854,
+      "violation_l1": 6.326052243821323e-06
+    },
+    {
+      "breakthrough_days": 11.392155107087303,
+      "ratio_peak": 0.44295454545454543,
+      "ratio_mean": 0.2059564393939394,
+      "growth_slope": 0.2539772727272727,
+      "lateral_share": 0.12179719822893229,
+      "outside_share": 0.21067721564927053,
+      "violation_share": 0.34321969696969695,
+      "violation_l1": 9.617071555112489e-06
+    },
+    {
+      "breakthrough_days": 2682.0075877034956,
+      "ratio_peak": 0.4113095238095238,
+      "ratio_mean": 0.1381770833333333,
+      "growth_slope": 0.3231845238095238,
+      "lateral_share": 0.09310214851111949,
+      "outside_share": 0.0,
+      "violation_share": 0.42569444444444443,
+      "violation_l1": 7.225210993055953e-06
+    },
+    {
+      "breakthrough_days": 226.79810248044757,
+      "ratio_peak": 0.4251,
+      "ratio_mean": 0.1784083333333333,
+      "growth_slope": 0.27335,
+      "lateral_share": 0.11793382218520851,
+      "outside_share": 0.13026345189006927,
+      "violation_share": 0.36815,
+      "violation_l1": 5.792215688416036e-06
+    },
+    {
+      "breakthrough_days": 111.08109738040663,
+      "ratio_peak": 0.44142857142857145,
+      "ratio_mean": 0.19874007936507934,
+      "growth_slope": 0.25869047619047625,
+      "lateral_share": 0.11253988755508282,
+      "outside_share": 0.6194917185838018,
+      "violation_share": 0.3867361111111111,
+      "violation_l1": 5.733380021410994e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.41423076923076924,
+      "ratio_mean": 0.20225961538461537,
+      "growth_slope": 0.22153846153846155,
+      "lateral_share": 0.13801992960190373,
+      "outside_share": 0.3742997372465421,
+      "violation_share": 0.44479166666666664,
+      "violation_l1": 1.0093179298564792e-05
+    },
+    {
+      "breakthrough_days": 17.191043485172294,
+      "ratio_peak": 0.2360377358490566,
+      "ratio_mean": 0.09240959119496855,
+      "growth_slope": 0.1656132075471698,
+      "lateral_share": 0.09730869001297017,
+      "outside_share": 0.2377107652399481,
+      "violation_share": 0.44145833333333334,
+      "violation_l1": 1.0011029189627152e-05
+    },
+    {
+      "breakthrough_days": 226.79810248044757,
+      "ratio_peak": 0.4127586206896552,
+      "ratio_mean": 0.16115301724137931,
+      "growth_slope": 0.2893965517241379,
+      "lateral_share": 0.10913203855794901,
+      "outside_share": 0.08567527359432636,
+      "violation_share": 0.41989583333333336,
+      "violation_l1": 6.124939773144433e-06
+    },
+    {
+      "breakthrough_days": 25.432684598083696,
+      "ratio_peak": 0.37961538461538463,
+      "ratio_mean": 0.18258012820512823,
+      "growth_slope": 0.20403846153846156,
+      "lateral_share": 0.15209678886564176,
+      "outside_share": 0.4818066042026744,
+      "violation_share": 0.41791666666666666,
+      "violation_l1": 1.0972877134918235e-05
+    },
+    {
+      "breakthrough_days": 77.45399095891744,
+      "ratio_peak": 0.08609195402298851,
+      "ratio_mean": 0.049753352490421454,
+      "growth_slope": 0.0356896551724138,
+      "lateral_share": 0.2232757375944554,
+      "outside_share": 0.0,
+      "violation_share": 0.4933500957854406,
+      "violation_l1": 1.2441762009984814e-05
+    },
+    {
+      "breakthrough_days": 25.432684598083696,
+      "ratio_peak": 0.3362987012987013,
+      "ratio_mean": 0.1489664502164502,
+      "growth_slope": 0.20581168831168833,
+      "lateral_share": 0.1650331507639089,
+      "outside_share": 0.11825373947022837,
+      "violation_share": 0.4053138528138528,
+      "violation_l1": 8.6107957031345e-06
+    },
+    {
+      "breakthrough_days": 37.14607582160347,
+      "ratio_peak": 0.3925,
+      "ratio_mean": 0.16776422764227641,
+      "growth_slope": 0.24881097560975612,
+      "lateral_share": 0.14125487646293888,
+      "outside_share": 0.024234543090199786,
+      "violation_share": 0.35032012195121953,
+      "violation_l1": 6.503022632387001e-06
+    },
+    {
+      "breakthrough_days": 2682.0075877034956,
+      "ratio_peak": 0.35276119402985073,
+      "ratio_mean": 0.12550062189054725,
+      "growth_slope": 0.26749999999999996,
+      "lateral_share": 0.12368375411907534,
+      "outside_share": 0.0,
+      "violation_share": 0.45386194029850746,
+      "violation_l1": 8.005280506040435e-06
+    },
+    {
+      "breakthrough_days": 226.79810248044757,
+      "ratio_peak": 0.465,
+      "ratio_mean": 0.2109027777777778,
+      "growth_slope": 0.27156250000000004,
+      "lateral_share": 0.1099598751671868,
+      "outside_share": 0.5667231386535889,
+      "violation_share": 0.3490625,
+      "violation_l1": 5.260597390588373e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.1628,
+      "ratio_mean": 0.08970833333333333,
+      "growth_slope": 0.07089999999999999,
+      "lateral_share": 0.13939481895363182,
+      "outside_share": 0.21885204266744068,
+      "violation_share": 0.44758333333333333,
+      "violation_l1": 2.1672676666639745e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.17289473684210527,
+      "ratio_mean": 0.10373903508771931,
+      "growth_slope": 0.0687171052631579,
+      "lateral_share": 0.21706163641647513,
+      "outside_share": 0.00018493566880663654,
+      "violation_share": 0.41385964912280704,
+      "violation_l1": 1.1013928087777458e-05
+    },
+    {
+      "breakthrough_days": NaN,
+      "ratio_peak": 0.32906593406593404,
+      "ratio_mean": 0.10751373626373627,
+      "growth_slope": 0.25310439560439557,
+      "lateral_share": 0.12423259703440821,
+      "outside_share": 0.04215872238879031,
+      "violation_share": 0.44108974358974357,
+      "violation_l1": 1.3209825738158543e-05
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.14955128205128204,
+      "ratio_mean": 0.09173611111111109,
+      "growth_slope": 0.04948717948717948,
+      "lateral_share": 0.16295994410805775,
+      "outside_share": 0.00017466231951560317,
+      "violation_share": 0.46173878205128205,
+      "violation_l1": 1.1802151675510686e-05
+    },
+    {
+      "breakthrough_days": 2.421245,
+      "ratio_peak": 0.39225352112676054,
+      "ratio_mean": 0.16587734741784035,
+      "growth_slope": 0.25242957746478867,
+      "lateral_share": 0.13557559537000732,
+      "outside_share": 0.036310325429160774,
+      "violation_share": 0.37870892018779345,
+      "violation_l1": 6.196108643052867e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.3241304347826087,
+      "ratio_mean": 0.1461141304347826,
+      "growth_slope": 0.19532608695652176,
+      "lateral_share": 0.16708245176366565,
+      "outside_share": 0.49060536204882055,
+      "violation_share": 0.4582518115942029,
+      "violation_l1": 9.189334377879277e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4723076923076923,
+      "ratio_mean": 0.23078525641025646,
+      "growth_slope": 0.255,
+      "lateral_share": 0.10949163449163449,
+      "outside_share": 0.7683236808236809,
+      "violation_share": 0.3519070512820513,
+      "violation_l1": 5.232608600636013e-06
+    },
+    {
+      "breakthrough_days": 1326.5690357526837,
+      "ratio_peak": 0.2776666666666667,
+      "ratio_mean": 0.13246527777777778,
+      "growth_slope": 0.1706111111111111,
+      "lateral_share": 0.14317169069462649,
+      "outside_share": 0.0,
+      "violation_share": 0.421875,
+      "violation_l1": 7.819461643521208e-06
+    },
+    {
+      "breakthrough_days": NaN,
+      "ratio_peak": 0.2646385542168675,
+      "ratio_mean": 0.08401606425702811,
+      "growth_slope": 0.2110240963855422,
+      "lateral_share": 0.11239244741873805,
+      "outside_share": 0.0,
+      "violation_share": 0.4372414658634538,
+      "violation_l1": 1.5582805644953623e-05
+    },
+    {
+      "breakthrough_days": 37.14607582160347,
+      "ratio_peak": 0.3455,
+      "ratio_mean": 0.16697916666666668,
+      "growth_slope": 0.19224999999999998,
+      "lateral_share": 0.1485597562664451,
+      "outside_share": 0.1675321977565434,
+      "violation_share": 0.4392152777777778,
+      "violation_l1": 1.1667973922158126e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.15307692307692308,
+      "ratio_mean": 0.0855448717948718,
+      "growth_slope": 0.06403846153846154,
+      "lateral_share": 0.1854281767955801,
+      "outside_share": 0.262707182320442,
+      "violation_share": 0.4567227564102564,
+      "violation_l1": 1.4862423086015042e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.19970588235294118,
+      "ratio_mean": 0.06910294117647059,
+      "growth_slope": 0.14961764705882352,
+      "lateral_share": 0.14024260480953393,
+      "outside_share": 0.0,
+      "violation_share": 0.4380980392156863,
+      "violation_l1": 7.051812644931488e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.44175,
+      "ratio_mean": 0.20145833333333332,
+      "growth_slope": 0.26149999999999995,
+      "lateral_share": 0.12708124644665242,
+      "outside_share": 0.4764057719901454,
+      "violation_share": 0.42765625,
+      "violation_l1": 9.665497600508388e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4288235294117647,
+      "ratio_mean": 0.19482843137254902,
+      "growth_slope": 0.2510294117647059,
+      "lateral_share": 0.12902963204168025,
+      "outside_share": 0.6764490394008467,
+      "violation_share": 0.34824754901960786,
+      "violation_l1": 8.358231752936263e-06
+    },
+    {
+      "breakthrough_days": 158.87345424641603,
+      "ratio_peak": 0.33716216216216216,
+      "ratio_mean": 0.16208333333333333,
+      "growth_slope": 0.18486486486486486,
+      "lateral_share": 0.12527788675297502,
+      "outside_share": 0.05891199163070485,
+      "violation_share": 0.44698198198198197,
+      "violation_l1": 1.0299560017301701e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.20921052631578949,
+      "ratio_mean": 0.1387938596491228,
+      "growth_slope": 0.05039473684210527,
+      "lateral_share": 0.14533671712136317,
+      "outside_share": 0.4263572917610804,
+      "violation_share": 0.44662280701754387,
+      "violation_l1": 1.953419814526569e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.35858108108108105,
+      "ratio_mean": 0.14511542792792792,
+      "growth_slope": 0.2403716216216216,
+      "lateral_share": 0.1668124872019211,
+      "outside_share": 0.040469852379977286,
+      "violation_share": 0.31829110360360363,
+      "violation_l1": 9.428923476662021e-06
+    },
+    {
+      "breakthrough_days": 158.87345424641603,
+      "ratio_peak": 0.345,
+      "ratio_mean": 0.145606884057971,
+      "growth_slope": 0.22103260869565214,
+      "lateral_share": 0.16563401346010043,
+      "outside_share": 0.141384467471424,
+      "violation_share": 0.43392663043478263,
+      "violation_l1": 7.99814733909443e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4583333333333333,
+      "ratio_mean": 0.18162808641975306,
+      "growth_slope": 0.3238888888888889,
+      "lateral_share": 0.09871071716357777,
+      "outside_share": 0.36774106903035186,
+      "violation_share": 0.40683641975308643,
+      "violation_l1": 7.133190592867322e-06
+    },
+    {
+      "breakthrough_days": 4.4411823500250005,
+      "ratio_peak": 0.12965909090909092,
+      "ratio_mean": 0.07975378787878788,
+      "growth_slope": 0.04323863636363637,
+      "lateral_share": 0.2673524694430618,
+      "outside_share": 0.06841435761296388,
+      "violation_share": 0.4677604166666667,
+      "violation_l1": 1.353544485027669e-05
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.4067142857142857,
+      "ratio_mean": 0.1655952380952381,
+      "growth_slope": 0.2684285714285714,
+      "lateral_share": 0.12805188199389625,
+      "outside_share": 0.4103933536792133,
+      "violation_share": 0.3956607142857143,
+      "violation_l1": 7.045987331366632e-06
+    },
+    {
+      "breakthrough_days": 460.53920311505374,
+      "ratio_peak": 0.2,
+      "ratio_mean": 0.11058624031007751,
+      "growth_slope": 0.095,
+      "lateral_share": 0.15295098895861467,
+      "outside_share": 0.09345460322503774,
+      "violation_share": 0.49583817829457366,
+      "violation_l1": 9.92231161944801e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.2838235294117647,
+      "ratio_mean": 0.1547549019607843,
+      "growth_slope": 0.1225,
+      "lateral_share": 0.15881167522589873,
+      "outside_share": 0.1790938048495092,
+      "violation_share": 0.42198529411764707,
+      "violation_l1": 1.2389356015773956e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.3952380952380952,
+      "ratio_mean": 0.17128968253968255,
+      "growth_slope": 0.24261904761904762,
+      "lateral_share": 0.14095376774663268,
+      "outside_share": 0.37145977429923555,
+      "violation_share": 0.3954761904761905,
+      "violation_l1": 6.760083124390803e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4417241379310345,
+      "ratio_mean": 0.2044324712643678,
+      "growth_slope": 0.25603448275862073,
+      "lateral_share": 0.12656188912346547,
+      "outside_share": 0.5549769333020564,
+      "violation_share": 0.32591235632183907,
+      "violation_l1": 6.6096185946662445e-06
+    },
+    {
+      "breakthrough_days": 37.14607582160347,
+      "ratio_peak": 0.39877659574468083,
+      "ratio_mean": 0.16181959219858155,
+      "growth_slope": 0.2635106382978723,
+      "lateral_share": 0.14513641512781666,
+      "outside_share": 0.003493974259236512,
+      "violation_share": 0.37460992907801416,
+      "violation_l1": 1.1411843843234237e-05
+    },
+    {
+      "breakthrough_days": 2.421245,
+      "ratio_peak": 0.3262857142857143,
+      "ratio_mean": 0.13410714285714284,
+      "growth_slope": 0.21464285714285714,
+      "lateral_share": 0.16124379444518985,
+      "outside_share": 0.24426405474305649,
+      "violation_share": 0.4438690476190476,
+      "violation_l1": 1.7851119991973974e-05
+    },
+    {
+      "breakthrough_days": 5419.908544452743,
+      "ratio_peak": 0.29359756097560974,
+      "ratio_mean": 0.0919969512195122,
+      "growth_slope": 0.23710365853658535,
+      "lateral_share": 0.13899475283070975,
+      "outside_share": 0.0,
+      "violation_share": 0.453755081300813,
+      "violation_l1": 1.2894013707409613e-05
+    },
+    {
+      "breakthrough_days": NaN,
+      "ratio_peak": 0.2721978021978022,
+      "ratio_mean": 0.08269688644688646,
+      "growth_slope": 0.2179945054945055,
+      "lateral_share": 0.13376753507014028,
+      "outside_share": 0.04751608480118131,
+      "violation_share": 0.42771749084249083,
+      "violation_l1": 7.990634003363084e-06
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.09576923076923077,
+      "ratio_mean": 0.0582011217948718,
+      "growth_slope": 0.03423076923076924,
+      "lateral_share": 0.20038178978423093,
+      "outside_share": 0.15965754613293226,
+      "violation_share": 0.5293910256410257,
+      "violation_l1": 1.139303913078038e-05
+    },
+    {
+      "breakthrough_days": 4.4411823500250005,
+      "ratio_peak": 0.15777777777777777,
+      "ratio_mean": 0.10006944444444445,
+      "growth_slope": 0.044999999999999984,
+      "lateral_share": 0.1879580204469375,
+      "outside_share": 0.21776893151180676,
+      "violation_share": 0.44984953703703706,
+      "violation_l1": 1.4306916455097962e-05
+    },
+    {
+      "breakthrough_days": 3812.7898739856546,
+      "ratio_peak": 0.4170689655172414,
+      "ratio_mean": 0.16505986590038316,
+      "growth_slope": 0.28442528735632183,
+      "lateral_share": 0.13001304668444041,
+      "outside_share": 0.022505530659708436,
+      "violation_share": 0.3987332375478927,
+      "violation_l1": 1.1623096725088544e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4579166666666667,
+      "ratio_mean": 0.2195052083333333,
+      "growth_slope": 0.25395833333333334,
+      "lateral_share": 0.1298886601796407,
+      "outside_share": 0.4085188997005988,
+      "violation_share": 0.34638020833333333,
+      "violation_l1": 8.985302883957047e-06
+    },
+    {
+      "breakthrough_days": 460.53920311505374,
+      "ratio_peak": 0.3698421052631579,
+      "ratio_mean": 0.1437390350877193,
+      "growth_slope": 0.25773684210526315,
+      "lateral_share": 0.13625697132234174,
+      "outside_share": 0.0012342669064090452,
+      "violation_share": 0.3247171052631579,
+      "violation_l1": 6.122695140220458e-06
+    },
+    {
+      "breakthrough_days": 111.08109738040663,
+      "ratio_peak": 0.367265625,
+      "ratio_mean": 0.15228190104166664,
+      "growth_slope": 0.24132812499999998,
+      "lateral_share": 0.14637653736991485,
+      "outside_share": 0.11483443708609271,
+      "violation_share": 0.350205078125,
+      "violation_l1": 6.827333436376648e-06
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.31410714285714286,
+      "ratio_mean": 0.16378720238095237,
+      "growth_slope": 0.15776785714285715,
+      "lateral_share": 0.16073664230039175,
+      "outside_share": 0.11098097815112476,
+      "violation_share": 0.42382440476190475,
+      "violation_l1": 1.4563468539563473e-05
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.2785714285714286,
+      "ratio_mean": 0.17678996598639454,
+      "growth_slope": 0.0873469387755102,
+      "lateral_share": 0.1414774691713726,
+      "outside_share": 0.04158119165610234,
+      "violation_share": 0.3832397959183673,
+      "violation_l1": 9.9008639153908e-06
+    }
+  ],
+  "indicators_truth": [
+    {
+      "breakthrough_days": 460.53920311505374,
+      "ratio_peak": 0.41009615384615383,
+      "ratio_mean": 0.18005608974358975,
+      "growth_slope": 0.2602884615384615,
+      "lateral_share": 0.09948377909305327,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.3194318181818182,
+      "ratio_mean": 0.10913352272727272,
+      "growth_slope": 0.24207386363636366,
+      "lateral_share": 0.12783634864853138,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4685714285714286,
+      "ratio_mean": 0.2300892857142857,
+      "growth_slope": 0.2532142857142857,
+      "lateral_share": 0.10852412365800027,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.10871621621621622,
+      "ratio_mean": 0.08327421171171172,
+      "growth_slope": 0.012060810810810813,
+      "lateral_share": 0.16863315189830624,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.5016666666666667,
+      "ratio_mean": 0.2487731481481482,
+      "growth_slope": 0.26527777777777783,
+      "lateral_share": 0.10021401321298967,
+      "outside_share": 0.0,
+      "violation_share": 2.3148148148148147e-05,
+      "violation_l1": 3.946048210412556e-10
+    },
+    {
+      "breakthrough_days": 4.4411823500250005,
+      "ratio_peak": 0.3977777777777778,
+      "ratio_mean": 0.19469907407407408,
+      "growth_slope": 0.20805555555555555,
+      "lateral_share": 0.12626322672690524,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 17.191043485172294,
+      "ratio_peak": 0.5231818181818182,
+      "ratio_mean": 0.266969696969697,
+      "growth_slope": 0.2622727272727273,
+      "lateral_share": 0.08988365493757094,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.29259259259259257,
+      "ratio_mean": 0.10940586419753086,
+      "growth_slope": 0.21333333333333332,
+      "lateral_share": 0.10004231610127653,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 111.08109738040663,
+      "ratio_peak": 0.09975,
+      "ratio_mean": 0.05933072916666667,
+      "growth_slope": 0.037031250000000016,
+      "lateral_share": 0.16327963832682263,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.2681720430107527,
+      "ratio_mean": 0.09408154121863799,
+      "growth_slope": 0.20263440860215054,
+      "lateral_share": 0.11441021001000047,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 655.5390397312545,
+      "ratio_peak": 0.3903012048192771,
+      "ratio_mean": 0.15394578313253013,
+      "growth_slope": 0.27099397590361446,
+      "lateral_share": 0.12057327333202895,
+      "outside_share": 0.0,
+      "violation_share": 2.0080321285140562e-05,
+      "violation_l1": 9.515199045351252e-11
+    },
+    {
+      "breakthrough_days": 2682.0075877034956,
+      "ratio_peak": 0.3443150684931507,
+      "ratio_mean": 0.13107020547945206,
+      "growth_slope": 0.24691780821917808,
+      "lateral_share": 0.14479500076207896,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.1828125,
+      "ratio_mean": 0.11980468749999999,
+      "growth_slope": 0.04874999999999999,
+      "lateral_share": 0.18269753287686122,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.3541666666666667,
+      "ratio_mean": 0.14047960069444443,
+      "growth_slope": 0.2398697916666667,
+      "lateral_share": 0.16581959742326172,
+      "outside_share": 0.0,
+      "violation_share": 4.340277777777778e-06,
+      "violation_l1": 1.0865430083439875e-11
+    },
+    {
+      "breakthrough_days": 2.421245,
+      "ratio_peak": 0.2436764705882353,
+      "ratio_mean": 0.15572303921568628,
+      "growth_slope": 0.07772058823529412,
+      "lateral_share": 0.1585740143228142,
+      "outside_share": 0.0,
+      "violation_share": 6.127450980392157e-06,
+      "violation_l1": 1.2417634628891783e-11
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.2648360655737705,
+      "ratio_mean": 0.1293886612021858,
+      "growth_slope": 0.14889344262295082,
+      "lateral_share": 0.1409792793981787,
+      "outside_share": 0.0,
+      "violation_share": 6.830601092896175e-06,
+      "violation_l1": 6.514168978538626e-12
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.42923076923076925,
+      "ratio_mean": 0.19556089743589744,
+      "growth_slope": 0.2503846153846154,
+      "lateral_share": 0.1224289109235434,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 932.681582522847,
+      "ratio_peak": 0.3090769230769231,
+      "ratio_mean": 0.12012179487179486,
+      "growth_slope": 0.21584615384615385,
+      "lateral_share": 0.18095949623779284,
+      "outside_share": 0.0,
+      "violation_share": 3.205128205128205e-06,
+      "violation_l1": 6.495378020165976e-12
+    },
+    {
+      "breakthrough_days": 932.681582522847,
+      "ratio_peak": 0.3577956989247312,
+      "ratio_mean": 0.14113351254480286,
+      "growth_slope": 0.24841397849462366,
+      "lateral_share": 0.1415510618710517,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.06126373626373626,
+      "ratio_mean": 0.03853937728937729,
+      "growth_slope": 0.019340659340659337,
+      "lateral_share": 0.2373173339669716,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.34125,
+      "ratio_mean": 0.14130208333333333,
+      "growth_slope": 0.2203125,
+      "lateral_share": 0.16918540361223738,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 460.53920311505374,
+      "ratio_peak": 0.3910526315789474,
+      "ratio_mean": 0.16875822368421053,
+      "growth_slope": 0.24542763157894737,
+      "lateral_share": 0.14014911554017837,
+      "outside_share": 0.0,
+      "violation_share": 1.644736842105263e-05,
+      "violation_l1": 2.124068976261384e-11
+    },
+    {
+      "breakthrough_days": 53.79367453107483,
+      "ratio_peak": 0.18491525423728813,
+      "ratio_mean": 0.12569915254237288,
+      "growth_slope": 0.046906779661016945,
+      "lateral_share": 0.15846395864936233,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 226.79810248044757,
+      "ratio_peak": 0.39710526315789474,
+      "ratio_mean": 0.1691688596491228,
+      "growth_slope": 0.2537894736842105,
+      "lateral_share": 0.13109760049778976,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 37.14607582160347,
+      "ratio_peak": 0.35672413793103447,
+      "ratio_mean": 0.13316091954022988,
+      "growth_slope": 0.25566091954022985,
+      "lateral_share": 0.109606531434326,
+      "outside_share": 0.0,
+      "violation_share": 4.789272030651341e-06,
+      "violation_l1": 7.1365712818460825e-12
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.519,
+      "ratio_mean": 0.28254166666666664,
+      "growth_slope": 0.24050000000000005,
+      "lateral_share": 0.08848252470137148,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.3749418604651163,
+      "ratio_mean": 0.16333817829457367,
+      "growth_slope": 0.23279069767441862,
+      "lateral_share": 0.15109898258831905,
+      "outside_share": 0.0,
+      "violation_share": 4.844961240310078e-06,
+      "violation_l1": 7.219554815085516e-12
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.21198630136986302,
+      "ratio_mean": 0.07488299086757992,
+      "growth_slope": 0.1568150684931507,
+      "lateral_share": 0.12107930942490186,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.37125,
+      "ratio_mean": 0.18604166666666666,
+      "growth_slope": 0.1978125,
+      "lateral_share": 0.1324188129899216,
+      "outside_share": 0.0,
+      "violation_share": 1.3020833333333334e-05,
+      "violation_l1": 2.6387473803235473e-11
+    },
+    {
+      "breakthrough_days": 77.45399095891744,
+      "ratio_peak": 0.35888888888888887,
+      "ratio_mean": 0.13230324074074074,
+      "growth_slope": 0.2599537037037037,
+      "lateral_share": 0.13912460268859533,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 77.45399095891744,
+      "ratio_peak": 0.4179090909090909,
+      "ratio_mean": 0.18737499999999999,
+      "growth_slope": 0.2495,
+      "lateral_share": 0.12699375341136515,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 2.421245,
+      "ratio_peak": 0.354,
+      "ratio_mean": 0.17656250000000004,
+      "growth_slope": 0.18124999999999997,
+      "lateral_share": 0.13982300884955753,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.3633132530120482,
+      "ratio_mean": 0.12161646586345382,
+      "growth_slope": 0.27876506024096387,
+      "lateral_share": 0.10705440435895319,
+      "outside_share": 0.0,
+      "violation_share": 2.5100401606425703e-06,
+      "violation_l1": 2.3937607538521144e-12
+    },
+    {
+      "breakthrough_days": 2682.0075877034956,
+      "ratio_peak": 0.4319642857142857,
+      "ratio_mean": 0.16852678571428573,
+      "growth_slope": 0.30553571428571424,
+      "lateral_share": 0.11214128035320088,
+      "outside_share": 0.0,
+      "violation_share": 1.4880952380952381e-05,
+      "violation_l1": 5.1444484089335774e-11
+    },
+    {
+      "breakthrough_days": 77.45399095891744,
+      "ratio_peak": 0.2473404255319149,
+      "ratio_mean": 0.09111480496453901,
+      "growth_slope": 0.17781914893617023,
+      "lateral_share": 0.21013840577947507,
+      "outside_share": 0.0,
+      "violation_share": 6.648936170212766e-06,
+      "violation_l1": 8.71876442570807e-12
+    },
+    {
+      "breakthrough_days": 17.191043485172294,
+      "ratio_peak": 0.34225609756097564,
+      "ratio_mean": 0.15235264227642276,
+      "growth_slope": 0.20865853658536587,
+      "lateral_share": 0.15967381516192508,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.49346153846153845,
+      "ratio_mean": 0.2442147435897436,
+      "growth_slope": 0.2628846153846154,
+      "lateral_share": 0.10230330074151847,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 10950.29694765973,
+      "ratio_peak": 0.33051470588235293,
+      "ratio_mean": 0.1160140931372549,
+      "growth_slope": 0.24970588235294117,
+      "lateral_share": 0.13177700900520242,
+      "outside_share": 0.0,
+      "violation_share": 3.0637254901960783e-06,
+      "violation_l1": 2.9217962684707777e-12
+    },
+    {
+      "breakthrough_days": 7.312008209061283,
+      "ratio_peak": 0.3729487179487179,
+      "ratio_mean": 0.139241452991453,
+      "growth_slope": 0.2734615384615384,
+      "lateral_share": 0.11570628404818538,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.420625,
+      "ratio_mean": 0.19380208333333335,
+      "growth_slope": 0.24281250000000004,
+      "lateral_share": 0.12832571889277075,
+      "outside_share": 0.0,
+      "violation_share": 2.604166666666667e-05,
+      "violation_l1": 2.4835269257783565e-11
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.35194444444444445,
+      "ratio_mean": 0.18302083333333333,
+      "growth_slope": 0.17319444444444446,
+      "lateral_share": 0.13583760197306013,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 7.312008209061283,
+      "ratio_peak": 0.4174418604651163,
+      "ratio_mean": 0.18714631782945737,
+      "growth_slope": 0.24622093023255814,
+      "lateral_share": 0.12304864473036994,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 77.45399095891744,
+      "ratio_peak": 0.07975903614457831,
+      "ratio_mean": 0.057276606425702814,
+      "growth_slope": 0.009307228915662644,
+      "lateral_share": 0.1747228187037118,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1326.5690357526837,
+      "ratio_peak": 0.27852941176470586,
+      "ratio_mean": 0.13150735294117646,
+      "growth_slope": 0.18852941176470586,
+      "lateral_share": 0.10849408256453266,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1886.379609218323,
+      "ratio_peak": 0.4277358490566038,
+      "ratio_mean": 0.17419025157232704,
+      "growth_slope": 0.2860377358490566,
+      "lateral_share": 0.10380466669675498,
+      "outside_share": 0.0,
+      "violation_share": 3.930817610062893e-06,
+      "violation_l1": 3.748719650670251e-12
+    },
+    {
+      "breakthrough_days": 655.5390397312545,
+      "ratio_peak": 0.3722560975609756,
+      "ratio_mean": 0.14979674796747966,
+      "growth_slope": 0.2526829268292683,
+      "lateral_share": 0.14112957937584802,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.452037037037037,
+      "ratio_mean": 0.20385802469135803,
+      "growth_slope": 0.26749999999999996,
+      "lateral_share": 0.10613171839515519,
+      "outside_share": 0.0,
+      "violation_share": 1.54320987654321e-05,
+      "violation_l1": 8.462387734997634e-11
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.17693333333333333,
+      "ratio_mean": 0.0663861111111111,
+      "growth_slope": 0.12623333333333334,
+      "lateral_share": 0.15297711201305494,
+      "outside_share": 0.0,
+      "violation_share": 5.555555555555556e-06,
+      "violation_l1": 8.278423085927855e-12
+    },
+    {
+      "breakthrough_days": 3812.7898739856546,
+      "ratio_peak": 0.384047619047619,
+      "ratio_mean": 0.14734788359788362,
+      "growth_slope": 0.2797222222222222,
+      "lateral_share": 0.11113604739889582,
+      "outside_share": 0.0,
+      "violation_share": 1.3227513227513228e-05,
+      "violation_l1": 1.616263546611041e-11
+    },
+    {
+      "breakthrough_days": 158.87345424641603,
+      "ratio_peak": 0.4442857142857143,
+      "ratio_mean": 0.1923571428571429,
+      "growth_slope": 0.26857142857142857,
+      "lateral_share": 0.10319965342245327,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 11.392155107087303,
+      "ratio_peak": 0.4309090909090909,
+      "ratio_mean": 0.20363636363636362,
+      "growth_slope": 0.2419318181818182,
+      "lateral_share": 0.11676897321428571,
+      "outside_share": 0.0,
+      "violation_share": 3.787878787878788e-05,
+      "violation_l1": 1.512693581506852e-10
+    },
+    {
+      "breakthrough_days": 3812.7898739856546,
+      "ratio_peak": 0.4029761904761905,
+      "ratio_mean": 0.1341046626984127,
+      "growth_slope": 0.3182440476190476,
+      "lateral_share": 0.09457934937397126,
+      "outside_share": 0.0,
+      "violation_share": 9.92063492063492e-06,
+      "violation_l1": 8.899304904108618e-11
+    },
+    {
+      "breakthrough_days": 226.79810248044757,
+      "ratio_peak": 0.4178,
+      "ratio_mean": 0.17622083333333335,
+      "growth_slope": 0.26885000000000003,
+      "lateral_share": 0.11488898872153784,
+      "outside_share": 0.0,
+      "violation_share": 8.333333333333334e-06,
+      "violation_l1": 7.947286058407332e-12
+    },
+    {
+      "breakthrough_days": 158.87345424641603,
+      "ratio_peak": 0.4307142857142857,
+      "ratio_mean": 0.19374007936507934,
+      "growth_slope": 0.25273809523809526,
+      "lateral_share": 0.11736392032362128,
+      "outside_share": 0.0,
+      "violation_share": 1.984126984126984e-05,
+      "violation_l1": 1.8922108671604043e-11
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4103846153846154,
+      "ratio_mean": 0.20144230769230767,
+      "growth_slope": 0.21884615384615386,
+      "lateral_share": 0.11654733492442323,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 17.191043485172294,
+      "ratio_peak": 0.21943396226415093,
+      "ratio_mean": 0.08797955974842768,
+      "growth_slope": 0.15,
+      "lateral_share": 0.12005182736127246,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.40956896551724137,
+      "ratio_mean": 0.15834770114942529,
+      "growth_slope": 0.28810344827586204,
+      "lateral_share": 0.10575265402413574,
+      "outside_share": 0.0,
+      "violation_share": 1.795977011494253e-05,
+      "violation_l1": 2.098152034057943e-11
+    },
+    {
+      "breakthrough_days": 37.14607582160347,
+      "ratio_peak": 0.37423076923076926,
+      "ratio_mean": 0.1815705128205128,
+      "growth_slope": 0.19961538461538464,
+      "lateral_share": 0.12859664607237423,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 111.08109738040663,
+      "ratio_peak": 0.08844827586206896,
+      "ratio_mean": 0.04878352490421456,
+      "growth_slope": 0.03847701149425287,
+      "lateral_share": 0.20852150009817397,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 25.432684598083696,
+      "ratio_peak": 0.32857142857142857,
+      "ratio_mean": 0.14742424242424243,
+      "growth_slope": 0.1993181818181818,
+      "lateral_share": 0.16344883277051828,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 37.14607582160347,
+      "ratio_peak": 0.3858536585365854,
+      "ratio_mean": 0.1654878048780488,
+      "growth_slope": 0.24329268292682926,
+      "lateral_share": 0.14239437484647507,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 3812.7898739856546,
+      "ratio_peak": 0.34619402985074627,
+      "ratio_mean": 0.12346703980099503,
+      "growth_slope": 0.2621641791044776,
+      "lateral_share": 0.1234039338151963,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 226.79810248044757,
+      "ratio_peak": 0.4683333333333333,
+      "ratio_mean": 0.21244791666666665,
+      "growth_slope": 0.27145833333333336,
+      "lateral_share": 0.10202664051646645,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.1592,
+      "ratio_mean": 0.08812500000000001,
+      "growth_slope": 0.0685,
+      "lateral_share": 0.14505910165484634,
+      "outside_share": 0.0,
+      "violation_share": 2.5e-05,
+      "violation_l1": 2.384185730786026e-11
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.17894736842105263,
+      "ratio_mean": 0.1049122807017544,
+      "growth_slope": 0.07394736842105262,
+      "lateral_share": 0.22154577759197325,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": NaN,
+      "ratio_peak": 0.3231868131868132,
+      "ratio_mean": 0.10557692307692307,
+      "growth_slope": 0.24843406593406595,
+      "lateral_share": 0.12585653569260127,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.1428846153846154,
+      "ratio_mean": 0.0900133547008547,
+      "growth_slope": 0.0464423076923077,
+      "lateral_share": 0.1663155395982315,
+      "outside_share": 0.0,
+      "violation_share": 5.341880341880342e-06,
+      "violation_l1": 1.05072287676089e-11
+    },
+    {
+      "breakthrough_days": 2.421245,
+      "ratio_peak": 0.39091549295774647,
+      "ratio_mean": 0.16543133802816903,
+      "growth_slope": 0.25197183098591547,
+      "lateral_share": 0.1335603682222104,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.3215217391304348,
+      "ratio_mean": 0.14423007246376812,
+      "growth_slope": 0.19510869565217392,
+      "lateral_share": 0.16849839854298812,
+      "outside_share": 0.0,
+      "violation_share": 9.057971014492753e-06,
+      "violation_l1": 8.638353921064379e-12
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.4715384615384615,
+      "ratio_mean": 0.22918269230769228,
+      "growth_slope": 0.2571153846153846,
+      "lateral_share": 0.10908328088944828,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1326.5690357526837,
+      "ratio_peak": 0.2826666666666667,
+      "ratio_mean": 0.13105324074074073,
+      "growth_slope": 0.17905555555555558,
+      "lateral_share": 0.14376048750331186,
+      "outside_share": 0.0,
+      "violation_share": 2.0833333333333333e-05,
+      "violation_l1": 2.9526374401012134e-11
+    },
+    {
+      "breakthrough_days": 10950.29694765973,
+      "ratio_peak": 0.27518072289156625,
+      "ratio_mean": 0.0843222891566265,
+      "growth_slope": 0.22301204819277107,
+      "lateral_share": 0.1124010239923796,
+      "outside_share": 0.0,
+      "violation_share": 2.5100401606425703e-06,
+      "violation_l1": 5.086741791671123e-12
+    },
+    {
+      "breakthrough_days": 37.14607582160347,
+      "ratio_peak": 0.3466666666666667,
+      "ratio_mean": 0.16771527777777775,
+      "growth_slope": 0.19266666666666668,
+      "lateral_share": 0.14351372613970437,
+      "outside_share": 0.0,
+      "violation_share": 2.0833333333333333e-05,
+      "violation_l1": 1.1755360573850737e-10
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.14903846153846154,
+      "ratio_mean": 0.08269230769230769,
+      "growth_slope": 0.06413461538461537,
+      "lateral_share": 0.2258720930232558,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.20270588235294118,
+      "ratio_mean": 0.06904411764705883,
+      "growth_slope": 0.1535,
+      "lateral_share": 0.14078807241746538,
+      "outside_share": 0.0,
+      "violation_share": 7.3529411764705884e-06,
+      "violation_l1": 1.460898242655606e-11
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.43725,
+      "ratio_mean": 0.201125,
+      "growth_slope": 0.2545,
+      "lateral_share": 0.11223327118292936,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.42970588235294116,
+      "ratio_mean": 0.1945098039215686,
+      "growth_slope": 0.2539705882352941,
+      "lateral_share": 0.1266381048387097,
+      "outside_share": 0.0,
+      "violation_share": 2.4509803921568626e-05,
+      "violation_l1": 2.337437014776622e-11
+    },
+    {
+      "breakthrough_days": 158.87345424641603,
+      "ratio_peak": 0.3335135135135135,
+      "ratio_mean": 0.16051801801801802,
+      "growth_slope": 0.18222972972972973,
+      "lateral_share": 0.12614003086852812,
+      "outside_share": 0.0,
+      "violation_share": 1.6891891891891892e-05,
+      "violation_l1": 6.712234934536099e-11
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.20657894736842106,
+      "ratio_mean": 0.13923245614035087,
+      "growth_slope": 0.049210526315789455,
+      "lateral_share": 0.16530162230272483,
+      "outside_share": 0.0,
+      "violation_share": 0.00010964912280701755,
+      "violation_l1": 3.47693762670076e-10
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.3520945945945946,
+      "ratio_mean": 0.14072635135135134,
+      "growth_slope": 0.23695945945945945,
+      "lateral_share": 0.16832713159684712,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 226.79810248044757,
+      "ratio_peak": 0.3391304347826087,
+      "ratio_mean": 0.14384510869565217,
+      "growth_slope": 0.2172282608695652,
+      "lateral_share": 0.16388023047133277,
+      "outside_share": 0.0,
+      "violation_share": 1.8115942028985507e-05,
+      "violation_l1": 6.74871408756772e-11
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.45037037037037037,
+      "ratio_mean": 0.18074074074074073,
+      "growth_slope": 0.3137962962962963,
+      "lateral_share": 0.08918203551912568,
+      "outside_share": 0.0,
+      "violation_share": 7.71604938271605e-06,
+      "violation_l1": 1.563702119178334e-11
+    },
+    {
+      "breakthrough_days": 4.4411823500250005,
+      "ratio_peak": 0.12181818181818181,
+      "ratio_mean": 0.07661931818181818,
+      "growth_slope": 0.03784090909090908,
+      "lateral_share": 0.28476084538375973,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 655.5390397312545,
+      "ratio_peak": 0.39471428571428574,
+      "ratio_mean": 0.15549404761904762,
+      "growth_slope": 0.27228571428571435,
+      "lateral_share": 0.13359874440148528,
+      "outside_share": 0.0,
+      "violation_share": 5.9523809523809525e-06,
+      "violation_l1": 1.2062844646776316e-11
+    },
+    {
+      "breakthrough_days": 460.53920311505374,
+      "ratio_peak": 0.20325581395348838,
+      "ratio_mean": 0.10910852713178294,
+      "growth_slope": 0.10244186046511627,
+      "lateral_share": 0.16354351687388988,
+      "outside_share": 0.0,
+      "violation_share": 1.937984496124031e-05,
+      "violation_l1": 2.8300655222079918e-11
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.285,
+      "ratio_mean": 0.15659313725490195,
+      "growth_slope": 0.12441176470588233,
+      "lateral_share": 0.1533886367193614,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.39166666666666666,
+      "ratio_mean": 0.16960317460317462,
+      "growth_slope": 0.24119047619047618,
+      "lateral_share": 0.1368741226017782,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.44224137931034485,
+      "ratio_mean": 0.20298132183908046,
+      "growth_slope": 0.2583620689655173,
+      "lateral_share": 0.12227924261192709,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 37.14607582160347,
+      "ratio_peak": 0.37106382978723407,
+      "ratio_mean": 0.1576418439716312,
+      "growth_slope": 0.2370212765957447,
+      "lateral_share": 0.1484787987852885,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 2.421245,
+      "ratio_peak": 0.31857142857142856,
+      "ratio_mean": 0.13138690476190476,
+      "growth_slope": 0.20928571428571427,
+      "lateral_share": 0.18280251891451094,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 10950.29694765973,
+      "ratio_peak": 0.28329268292682924,
+      "ratio_mean": 0.08847052845528457,
+      "growth_slope": 0.22679878048780486,
+      "lateral_share": 0.14258227557291367,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": NaN,
+      "ratio_peak": 0.26175824175824175,
+      "ratio_mean": 0.08123626373626373,
+      "growth_slope": 0.2079120879120879,
+      "lateral_share": 0.1358922331191523,
+      "outside_share": 0.0,
+      "violation_share": 1.1446886446886447e-05,
+      "violation_l1": 2.5381098264776192e-11
+    },
+    {
+      "breakthrough_days": 323.33566915982374,
+      "ratio_peak": 0.09788461538461539,
+      "ratio_mean": 0.0586338141025641,
+      "growth_slope": 0.03745192307692308,
+      "lateral_share": 0.23730782371028356,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 4.4411823500250005,
+      "ratio_peak": 0.15444444444444444,
+      "ratio_mean": 0.09984953703703703,
+      "growth_slope": 0.042430555555555555,
+      "lateral_share": 0.2304972759939724,
+      "outside_share": 0.0,
+      "violation_share": 2.8935185185185186e-05,
+      "violation_l1": 3.380356064508483e-11
+    },
+    {
+      "breakthrough_days": 5419.908544452743,
+      "ratio_peak": 0.39436781609195404,
+      "ratio_mean": 0.15778735632183907,
+      "growth_slope": 0.26724137931034486,
+      "lateral_share": 0.1350088022825229,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.45875,
+      "ratio_mean": 0.22004340277777779,
+      "growth_slope": 0.254375,
+      "lateral_share": 0.11329835496469289,
+      "outside_share": 0.0,
+      "violation_share": 5.208333333333334e-05,
+      "violation_l1": 2.1627380442090782e-10
+    },
+    {
+      "breakthrough_days": 655.5390397312545,
+      "ratio_peak": 0.366,
+      "ratio_mean": 0.142875,
+      "growth_slope": 0.25442105263157894,
+      "lateral_share": 0.13697410630688708,
+      "outside_share": 0.0,
+      "violation_share": 8.771929824561403e-06,
+      "violation_l1": 2.6142388601102517e-11
+    },
+    {
+      "breakthrough_days": 158.87345424641603,
+      "ratio_peak": 0.365078125,
+      "ratio_mean": 0.15044921875,
+      "growth_slope": 0.24136718749999997,
+      "lateral_share": 0.1480591977151759,
+      "outside_share": 0.0,
+      "violation_share": 1.3020833333333334e-05,
+      "violation_l1": 1.2417634628891783e-11
+    },
+    {
+      "breakthrough_days": 2.421245,
+      "ratio_peak": 0.31035714285714283,
+      "ratio_mean": 0.1628199404761905,
+      "growth_slope": 0.1544642857142857,
+      "lateral_share": 0.15057350454690857,
+      "outside_share": 0.0,
+      "violation_share": 2.232142857142857e-05,
+      "violation_l1": 2.92701383963756e-11
+    },
+    {
+      "breakthrough_days": 1.0,
+      "ratio_peak": 0.26448979591836735,
+      "ratio_mean": 0.17532738095238096,
+      "growth_slope": 0.07454081632653062,
+      "lateral_share": 0.14021388558818537,
+      "outside_share": 0.0,
+      "violation_share": 0.0,
+      "violation_l1": 0.0
+    }
+  ],
+  "seconds_total": 488.0715844631195
+}

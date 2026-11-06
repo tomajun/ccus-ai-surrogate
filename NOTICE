@@ -1,0 +1,44 @@
+# NOTICE · 第三方代码归属
+
+## `repro/ufno/` 下的上游文件
+
+以下 8 个文件**不是本项目编写**，逐字复制自官方仓库 <https://github.com/gegewen/ufno>，
+固定在 commit `8315fd7b5bd75282b7efe42ee6b8de86543d13cc`：
+
+```
+LICENSE
+README.md
+ufno.py
+lploss.py
+eval_UFNO_gas_saturation.ipynb
+eval_UFNO_pressure_buildup.ipynb
+train_UFNO_gas_saturation.ipynb
+train_UFNO_pressure_buildup.ipynb
+```
+
+- 作者：Gregory Wen 等（*U-FNO: U-Net enhanced Fourier neural operator*, 2022）。
+- 上游许可：**CC BY-NC-ND 4.0**（文本见 `repro/ufno/LICENSE`）——**禁止商业使用、禁止再发布演绎作品**。
+- 本项目的 `LICENSE`（MIT）**只适用于本项目自写代码**，不覆盖上面这 8 个文件。
+- 上游仓库的原始 git 目录改名保留在 `repro/ufno/.upstream_git_backup/`（未删除，且不入库）。
+
+## 本项目在 `repro/ufno/` 下自写的文件
+
+```
+eval_ufno_gas_saturation.py    由上游 eval notebook 转录，加了指令式参数与本机直读路径
+train_ufno_gas_saturation.py   由上游 train notebook 转录（本项目未用于训练，仅保留可追溯）
+ufno_reader.py                 按字节偏移 + as_strided 直读 .pt，绕开本机 torch mmap 段错误
+```
+
+⚠️ 前两个文件是上游作品的**转录/修改版**，在 ND 条款下属于演绎作品。**公开发布前必须先向上游作者取得书面许可，
+或把这三个文件与上游文件一并从公开仓库移除**（`docs/GitHub发布前检查清单.md` 阻断项 1）。
+
+## 数据
+
+`数据集/` 里的 `sg_*.pt` 与 `sg_UFNO_4500_trained.pt` 来自同一篇论文配套发布的公开数据与权重，
+**体积数十 GB 且许可条款未确认，不入库**；获取方式见 `docs/数据集与结题可行性审计.md`。
+
+## 引用
+
+Wen, G. et al. (2022). U-FNO: An enhanced Fourier neural operator for predicting multiphase flow in
+porous media. Water Resources Research. / Li et al. (2021). Fourier neural operator for parametric
+partial differential equations (ICLR).

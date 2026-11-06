@@ -1,0 +1,11 @@
+# 本机实测通过的环境（2026-11-06），用于复现 README §4/§5 的全部数字。
+# Python 3.13.14。torch 要先用 CUDA 索引单独安装，否则 pip 会拉到 CPU 版：
+#   pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cu132
+# 再装其余依赖：pip install -r requirements-lock.txt
+torch==2.15.0
+numpy==2.5.4
+matplotlib==3.11.2
+scikit-learn==1.9.1
+streamlit==1.66.0
+pandas==3.0.6
+pytest==9.1.1

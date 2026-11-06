@@ -1,0 +1,9 @@
+{
+  "model": "cnn",
+  "seeds": 5,
+  "epochs": 15,
+  "picp_95": 0.08141716851128472,
+  "mpiw": 1.4221405997272285e-10,
+  "mean_std": 3.555351499318071e-11,
+  "note": "\u9636\u6bb5B\u6df1\u5ea6\u96c6\u6210UQ\u9a8c\u8bc1\uff1a\u5bf9\u6bd4\u9636\u6bb5A PICP 0.7%~24% \u7684\u5d29\u6e83"
+}

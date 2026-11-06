@@ -1,0 +1,7 @@
+{
+  "model": "fno",
+  "rmse": 0.1362,
+  "ssim": 0.0466,
+  "infer_latency_ms": 71.144,
+  "speedup_vs_sim_frame": 7028.0
+}

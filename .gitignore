@@ -1,0 +1,29 @@
+# 数据大文件不入库
+#   数据集/        官方 U-FNO 的 sg_*.pt（31 GB，许可未确认，需自行下载）
+#   data/*.npz     早期合成数据，可用 sim/make_dataset.py 重新生成
+#   experiments/*.npz  可由 tools/run_uq_risk.py --out_npz 重新生成
+数据集/
+data/*.npz
+models/*.pt
+experiments/*.npz
+
+# 运行日志与本机痕迹（含绝对路径，不入库）
+experiments/_*.log
+tools/_*.log
+docs/_*.txt
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# 环境与缓存
+.venv/
+.env
+.pytest_cache/
+experiments/*.pt
+results/*.png
+results/*.pdf
+
+# 上游 gegewen/ufno 的原始 git 目录（改名保留，未删除；还原：mv repro/ufno/.upstream_git_backup repro/ufno/.git）
+repro/ufno/.upstream_git_backup/

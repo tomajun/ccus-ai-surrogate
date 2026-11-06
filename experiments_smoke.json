@@ -1,0 +1,9 @@
+{
+  "model_path": "C:/workplace/ccus-ai-surrogate/数据集/sg_UFNO_4500_trained.pt",
+  "n_samples": 1,
+  "mean_rel_l2": 2.848884105682373,
+  "per_sample_rel_l2": [
+    2.848884105682373
+  ],
+  "seconds_per_sample": 9.505282878875732
+}

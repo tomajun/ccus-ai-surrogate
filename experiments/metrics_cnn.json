@@ -1,0 +1,7 @@
+{
+  "model": "cnn",
+  "rmse": 0.1393,
+  "ssim": 0.0106,
+  "infer_latency_ms": 16.717,
+  "speedup_vs_sim_frame": 29909.5
+}

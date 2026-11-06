@@ -1,0 +1,14 @@
+{
+  "model": "cnn",
+  "uq": "deep_ensemble",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "alpha": 0.9,
+  "picp": 0.2432,
+  "mpiw": 0.0
+}
