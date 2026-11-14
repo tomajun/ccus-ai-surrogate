@@ -1,6 +1,6 @@
 # CCUS-AI-Surrogate · 面向 CO₂ 地质封存的轻量级深度学习代理模型与风险不确定性量化
 
-> 大学生创新创业训练计划（创新类）开源作品
+> 大学生创新创业训练计划（创新训练项目）
 > 方向：**CCUS（碳捕集、利用与封存）** × **算子学习（Fourier Neural Operator）**
 > 一句话：用官方预训练的 U-FNO 算子模型把 CO₂ 羽流演化从"小时级数值仿真"降到"亚秒级前向"，再叠加可校准的区间估计，输出场地级的封存风险三级筛查（绿/黄/红）。
 
@@ -18,6 +18,8 @@
 
 不做什么（详见第 7 节）：不做泄漏/盖层失效的实时预警，做的是**场地风险筛查与排序**；不做三维真实场地建模；机制 2/3（井筒、断层）在本数据集上没有几何输入，无法评估。
 
+申报书成果②要的"输入地质与注入参数 → 羽流预测 + 不确定性云图 + 风险等级"交互原型，落在 app 第⑥页**参数沙盘**：现场加载官方权重做前向（不训练），判级参照队列与 κ 直接读跑批产物，所以和①~④页同一口径——页面自己会显示"现场 0.236 / 跑批 0.236 一致"作为交叉核对。
+
 ## 1. 背景与意义
 
 在"双碳"战略下，CCUS 是把工业 CO₂ 捕集后封入地下千米级岩层的技术。安全性论证依赖高保真多相流数值模拟（TOUGH / ECLIPSE / GEOS / MRST 等），单次正演动辄数十分钟到数小时，场地比选、参数敏感性分析、不确定性量化这些"要跑上万次"的工作难以开展。
@@ -32,7 +34,7 @@
 模型层   U-FNO = Net3d(10,10,10,width=36)，33,097,829 参数，官方权重推理
 UQ 层    对 5 个有物理含义的输入通道做掩膜内相关扰动 → K=8 副本 → 均值/分位 → 池化 κ + Mondrian 保形
 风险层   三轴指标（突破天数/波及面积/横向范围）→ 与真值分布分位对齐 → 绿/黄/红 + 触发原因
-交付层   一键管线脚本 + 9 张真实数据图 + Streamlit 只读产物浏览器（5 页）
+交付层   一键管线脚本 + 9 张真实数据图 + Streamlit 演示 6 页（①~⑤ 只读产物；⑥ 参数沙盘现场前向）
 ```
 
 ## 3. 三个关键取舍
@@ -49,7 +51,7 @@ python -m venv .venv && .venv/Scripts/activate        # Linux/Mac: source .venv/
 pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cu132
 pip install -r requirements-lock.txt
 
-# ② 测试：23 项，不依赖 GPU 与数据集，0.91 s
+# ② 测试：25 项，不依赖 GPU 与数据集，0.25 s
 pytest tests/test_uq_risk.py
 
 # ③ 数据：官方 U-FNO 的 sg_test_*.pt / sg_val_*.pt / sg_UFNO_4500_trained.pt
@@ -66,7 +68,7 @@ python tools/run_uq_risk.py --model_path 数据集/sg_UFNO_4500_trained.pt --dat
        --limit 500 --replicas 8 --alpha 0.10 \
        --out_json experiments/ufno_uq_report_500.json --out_csv experiments/ufno_uq_tiers_500.csv
 
-# ⑦ 出图 + 演示（第 ⑦ 步只读 json/csv/npz 产物，不需要 torch/GPU）
+# ⑦ 出图 + 演示（app 的 ①~⑤ 页只读 json/csv/npz 产物；⑥ 参数沙盘页要现场前向，需权重与数据集）
 python tools/make_figures.py                             # → results/ufno_uq/fig1~fig9
 streamlit run src/app/streamlit_app.py
 ```
@@ -110,7 +112,7 @@ streamlit run src/app/streamlit_app.py
 
 ## 6. 数据与许可边界
 
-- 仓库**不含**任何真实涉密数据，也**不含** U-FNO 官方 `.pt` 大文件（≈20 GB，许可条款待确认，见 `docs/GitHub发布前检查清单.md`）。
+- 本仓库**不含**任何真实涉密数据，也**不含** U-FNO 官方 `.pt` 大文件（≈20 GB，许可条款待确认，获取方式见 `docs/数据集与结题可行性审计.md`）。
 - 早期合成数据路线（`sim/make_dataset.py` + 自训 CNN/FNO + `risk_classifier` 三档）已停用，仅作为可复现的历史脚手架保留，其产物在 `experiments/metrics_*.json`，**不作为当前结论依据**。
 - 数据字段与形状实测记录：输入 `(N,96,200,24,12)`、输出 `(N,96,200,24)`；掩膜 = 第 0 通道在 t=0 的非零列，占竖向 52/96 = 54.2%；模型输出未 clamp，实测 −0.0065~1.0024。
 
@@ -135,7 +137,7 @@ ccus-ai-surrogate/
 │   ├── uq_model.py      UQ 引擎：对 5 个物理通道做掩膜内参数扰动 + split conformal 校准
 │   ├── risk_model.py    三级判级：新口径（相对分位 + 区间降级）；旧绝对几何带实现仍在同文件内
 │   ├── risk_model_demo.py  命令行演示：timeline / calibrate / tier
-│   ├── app/streamlit_app.py  5 页演示，只读 experiments/ 产物与 results/ 图
+│   ├── app/streamlit_app.py  6 页演示：①~⑤ 只读 experiments/ 与 results/；⑥ 参数沙盘现场前向
 │   └── dataset.py / models/ / train*.py   早期合成数据路线（已停用）
 ├── tools/
 │   ├── run_uq_risk.py       一键主链路：推理 → 扰动 → 保形 → 判级 → 可靠性扫描
@@ -146,7 +148,7 @@ ccus-ai-surrogate/
 ├── 数据集/                   官方权重与样本（≈20 GB，不入库，需自行下载）
 ├── experiments/             指标 json / 判级 csv / 逐场地 npz（npz 与日志不入库）
 ├── results/ufno_uq/         fig1~fig9：散点对比、残差、区间跨度、分档对比、场带、时间轴、可靠性、羽流演化剖面、判级混淆矩阵
-├── tests/test_uq_risk.py    23 项单测，不需要 GPU/数据集
+├── tests/test_uq_risk.py    25 项单测，不需要 GPU/数据集
 └── docs/                    讲解与答辩文档（见下节索引）
 ```
 
@@ -159,7 +161,6 @@ ccus-ai-surrogate/
 | 答辩怎么讲、怎么被追问 | `docs/U-FNO模型讲解与答辩准备.md`、`docs/答辩材料.md` |
 | 数据集的真实形状与坑 | `docs/数据集与结题可行性审计.md` |
 | 项目背景怎么调研 | `docs/项目背景调研问题清单.md`（47 题，含优先级） |
-| 上传 GitHub 前还有什么没处理 | `docs/GitHub发布前检查清单.md` |
 | 已失效的历史口径 | `docs/archive/`（仅作追溯，不要引用） |
 
 ## 10. 贡献与许可

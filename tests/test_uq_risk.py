@@ -10,9 +10,9 @@ import numpy as np
 from src.risk_model import (RiskLevel, RiskReference, SiteIndicators, TierPolicy,
                             classify_site, composite_score, extract_indicators,
                             interval_tier, physical_time_days)
-from src.uq_model import (CH_INJ_RATE, CH_INJ_LOC, CH_LOG_KR, CH_LOG_KZ, CH_POROSITY,
+from src.uq_model import (CH_INJ_RATE, CH_INJ_LOC, CH_LAMBDA, CH_LOG_KR, CH_LOG_KZ, CH_POROSITY,
                           CH_SWI, CH_TEMP, GRID_CHANNELS, PerturbConfig, band_coverage,
-                          calibrate_kappa, conformal_quantile, indicator_intervals,
+                          calibrate_kappa, conformal_quantile, edit_channels, indicator_intervals,
                           mc_band, mondrian_quantiles, pooled_kappa, perturb_inputs,
                           score_intervals)
 
@@ -200,6 +200,35 @@ def test_perturbation_is_spatially_correlated_not_white():
     dt = np.abs(out[..., CH_LOG_KR] - a[..., CH_LOG_KR])
     assert np.allclose(dt, dt[:, :, 0:1], atol=1e-6), "渗透率是静态属性，不该随时间变化"
     assert not np.any(dt[2:9] == 0), "储层内每格都该被扰动到"
+
+
+def test_edit_channels_uses_the_same_units_as_perturbation():
+    """交互原型让使用者显式改参数；量纲必须和 perturb_inputs 一致，否则沙盘与跑批说的不是同一种话。"""
+    a = _fake_input(4)
+    rock = a[..., CH_LOG_KR] != 0
+    out = edit_channels(a, perm_mult=1.5, poro_add=0.02, rate_mult=2.0, swi_add=-0.01, lam_add=0.05)
+    d = np.log(1.5) / 15.0
+    for ch in (CH_LOG_KR, CH_LOG_KZ):
+        assert np.allclose((out[..., ch] - a[..., ch])[rock], d), "渗透率 ×1.5 = 对数通道加 ln(1.5)/15"
+    assert np.allclose((out[..., CH_POROSITY] - a[..., CH_POROSITY])[rock], 0.02)
+    assert np.allclose(out[..., CH_INJ_RATE][rock], a[..., CH_INJ_RATE][rock] * 2.0), "注入速率是乘性"
+    assert np.allclose((out[..., CH_SWI] - a[..., CH_SWI])[rock], -0.01)
+    assert np.allclose((out[..., CH_LAMBDA] - a[..., CH_LAMBDA])[rock], 0.05)
+    for ch in GRID_CHANNELS + (CH_INJ_LOC, CH_TEMP):
+        assert np.array_equal(out[..., ch], a[..., ch]), f"通道 {ch} 是坐标/边界条件，不接受编辑"
+    assert np.array_equal(out[~rock], a[~rock]), "掩膜外一动就造出假储层"
+    assert np.array_equal(edit_channels(a), a), "全默认值必须原样返回"
+
+
+def test_edit_channels_validates_inputs():
+    a = _fake_input(5)
+    for bad in (0.0, -1.0):
+        try:
+            edit_channels(a, perm_mult=bad)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"倍率 {bad} 应被拒绝（ln 无意义）")
 
 
 def test_mc_band_uses_unbiased_std():

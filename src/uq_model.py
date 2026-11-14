@@ -109,6 +109,34 @@ def perturb_inputs(a: np.ndarray, cfg: PerturbConfig, rng: np.random.Generator) 
     return out.astype(np.float32)
 
 
+def edit_channels(a: np.ndarray, perm_mult: float = 1.0, poro_add: float = 0.0,
+                  rate_mult: float = 1.0, swi_add: float = 0.0, lam_add: float = 0.0) -> np.ndarray:
+    """把"地质与注入参数"的显式改动加到单个输入场 (H,W,T,C) 上；返回新数组，不改原数组。
+
+    量纲约定与 perturb_inputs 完全一致（同一个 ch = ln(kr)/15）：渗透率 ×m 就是通道加 ln(m)/15。
+    同样只在储层掩膜内改 —— 掩膜外的 0 是"该格不属于计算域"，动它就造出假储层。
+    注入位置 ch3、温压 ch5/6、网格 ch9/10/11 属已知边界条件，不接受编辑。
+    """
+    a = np.asarray(a, dtype=np.float32)
+    if a.shape[-1] != C:
+        raise ValueError(f"输入场最后一维应为 {C} 通道，实得 {a.shape}")
+    out = a.copy()
+    rock = out[..., CH_LOG_KR] != 0
+    if perm_mult <= 0:
+        raise ValueError("perm_mult / rate_mult 必须为正")
+    if perm_mult != 1.0:
+        d = float(np.log(perm_mult)) / 15.0
+        for ch in (CH_LOG_KR, CH_LOG_KZ):
+            out[..., ch] = np.where(rock, out[..., ch] + d, out[..., ch])
+    for ch, add in ((CH_POROSITY, poro_add), (CH_SWI, swi_add), (CH_LAMBDA, lam_add)):
+        if add:
+            out[..., ch] = np.where(rock, out[..., ch] + float(add), out[..., ch])
+    if rate_mult != 1.0:
+        out[..., CH_INJ_RATE] = np.where(rock, out[..., CH_INJ_RATE] * float(rate_mult),
+                                         out[..., CH_INJ_RATE])
+    return out.astype(np.float32)
+
+
 def mc_band(replicas: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """(K,H,W,T) 副本 → (mean, std)。std 用无偏估计（ddof=1），K=1 时为 0。"""
     r = np.asarray(replicas, dtype=np.float64)

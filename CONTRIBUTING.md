@@ -1,12 +1,12 @@
 # 贡献指南（CONTRIBUTING）
 
-感谢参与本项目！本仓库服务于本科生大创（CCUS 方向），欢迎队友/开源协作者提交改进。
+感谢参与本项目！本仓库服务于本科生大创（CCUS 方向），欢迎队友提交改进。
 
 ## 开发流程
 1. 从 `main` 切出功能分支：`git checkout -b feature/你的功能`
 2. 遵循 Conventional Commits 提交（见 README 提交规范）
 3. 保证 `pytest tests/` 通过
-4. 开 Pull Request，描述做了什么、附指标/截图
+4. 合并回 `main` 前，说明做了什么、附指标/截图
 
 ## 代码风格
 - Python 用 4 空格缩进，关键函数写中文 docstring（便于本科生阅读）

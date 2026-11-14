@@ -244,7 +244,7 @@ $$\text{rel L2} = \frac{\lVert \hat u_{\text{mask}} - u_{\text{mask}} \rVert_2}{
   --report experiments/ufno_uq_report_500.json --csv experiments/ufno_uq_tiers_500.csv \
   --npz experiments/ufno_uq_500.npz --outdir results/ufno_uq --band-site 0
 
-# ⑧ 演示网页（同样纯 CPU，只读 json/csv/npz + 上面那批图，5 页）
+# ⑧ 演示网页（①~⑤ 页纯 CPU，只读 json/csv/npz + 上面那批图；⑥ 参数沙盘要权重与数据集，共 6 页）
 .venv/Scripts/python.exe -m streamlit run src/app/streamlit_app.py
 ```
 

@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import time
 
 import numpy as np
 import pandas as pd
@@ -31,7 +32,10 @@ import matplotlib.pyplot as plt  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
-from src.risk_model import physical_time_days  # noqa: E402
+from src.risk_model import (RiskReference, SiteIndicators, TierPolicy,  # noqa: E402
+                            classify_site, extract_indicators, physical_time_days)
+from src.uq_model import (PerturbConfig, edit_channels,  # noqa: E402
+                          mc_band, perturb_inputs)
 
 TIER_COLOR = {"GREEN": "#2e7d32", "YELLOW": "#f9a825", "RED": "#c62828"}
 TIER_CN = {"GREEN": "绿 · 低风险", "YELLOW": "黄 · 模型说不准", "RED": "红 · 高风险"}
@@ -53,6 +57,45 @@ def load_artifacts(report_path: str, csv_path: str, npz_path: str):
     else:
         z = None
     return {"rep": rep, "df": df, "z": z}
+
+
+# --------------------------------------------------------------------------- #
+# 交互原型（申报书成果②：输入地质与注入参数 → 羽流 / 不确定性云图 / 风险等级）
+# 装载方式与 tools/run_uq_risk.py 完全一致：ufno_reader 直读 .pt，绕开本机 mmap 段错误。
+# --------------------------------------------------------------------------- #
+@st.cache_resource(show_spinner="加载官方权重与测试集输入场…")
+def load_engine(data_dir: str, model_path: str):
+    import torch
+    sys.path.insert(0, os.path.join(ROOT, "repro", "ufno"))
+    from eval_ufno_gas_saturation import _expose_to_main
+    from ufno_reader import open_split
+    test_a, test_u = open_split(data_dir, "test")
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    _expose_to_main()
+    model = torch.load(model_path, weights_only=False, map_location=device)
+    model.to(device).eval()
+    return {"torch": torch, "model": model, "device": device, "a": test_a, "u": test_u}
+
+
+def forward(eng, a_np: np.ndarray) -> np.ndarray:
+    """(H,W,T,C) 输入场 → (H,W,T) 饱和度；ascontiguousarray 不能省（stride 视图不连续会读错数据）。"""
+    t = eng["torch"]
+    a_np = np.ascontiguousarray(a_np, dtype=np.float32)
+    with t.no_grad():
+        out = eng["model"](t.from_numpy(a_np[None]).to(eng["device"]))
+    return out.view(a_np.shape[:3]).float().cpu().numpy()
+
+
+@st.cache_resource(show_spinner=False)
+def live_reference(rep):
+    """把跑批存的 500 场地指标队列还原成参照系。实测还原后与 `ufno_uq_tiers_500.csv` 的
+    score/score_lo/score_hi 逐站点全等（最大偏差 0），所以交互页判级与跑批同口径，无需重新校准。"""
+    ip = [SiteIndicators(**d) for d in rep["indicators_pred"]]
+    it = [SiteIndicators(**d) for d in rep["indicators_truth"]]
+    p = rep["tiers"]["policy"]
+    return (RiskReference(it), RiskReference(ip),
+            TierPolicy(weights=dict(p["weights"]), red_pct=p["red_pct"], yellow_pct=p["yellow_pct"]),
+            rep["indicator_conformal"]["q"])
 
 
 def field_ax(ax, arr_2d, mask_2d, cmap, title, vmin=None, vmax=None):
@@ -234,6 +277,111 @@ def page_tiers(rep, df, figdir):
                            "ufno_uq_tiers_500.csv", "text/csv")
 
 
+def page_sandbox(rep, df):
+    """申报书成果②的交互原型：改地质/注入参数 → 现场前向 → 羽流 + 区间 + 判级。"""
+    st.header("参数沙盘：改地质与注入参数，现场出羽流、区间与判级")
+    st.caption("本页只做前向（不训练）。判级参照队列、κ、保形半径全部读跑批产物，"
+               "与①~④页同一口径；底本是官方测试集里的真实地质实现，参数改动只加在储层掩膜内。")
+
+    data_dir = st.text_input("数据目录（含 sg_test_a.pt / sg_test_u.pt）", os.path.join(ROOT, "数据集"))
+    model_path = st.text_input("官方权重", os.path.join(ROOT, "数据集", "sg_UFNO_4500_trained.pt"))
+    if not (os.path.isdir(data_dir) and os.path.exists(model_path)):
+        st.error("没找到官方权重或测试集。它们因体积与许可原因不随仓库分发；"
+                 "放进 `数据集/` 后重进本页，获取方式见 `docs/数据集与结题可行性审计.md`。")
+        return
+    try:
+        eng = load_engine(data_dir, model_path)
+    except Exception as exc:
+        st.error(f"装载失败：{type(exc).__name__}: {exc}")
+        return
+    n_test = len(eng["a"])
+    st.caption(f"设备 `{eng['device']}` · 测试集 {n_test} 个场地 · 单次前向 ≈0.15 s（GPU）")
+
+    site = int(st.slider("场地（测试集索引）", 0, n_test - 1, 0))
+    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    perm_mult = c1.slider("渗透率倍率", 0.5, 2.0, 1.0, 0.05, help="ch0/ch1（对数有效渗透率）整体 ×倍率")
+    poro_add = c2.slider("孔隙度偏移", -0.05, 0.05, 0.0, 0.005, help="ch2 绝对偏移（孔隙度 0.05–0.35）")
+    rate_mult = c3.slider("注入速率倍率", 0.5, 2.0, 1.0, 0.05, help="ch4 乘性")
+    swi_add = c4.slider("束缚水饱和度偏移", -0.05, 0.05, 0.0, 0.005, help="ch7 加性")
+    lam_add = c5.slider("流度比偏移", -0.2, 0.2, 0.0, 0.02, help="ch8 加性")
+    K = int(c6.slider("扰动副本数 K", 2, 8, 4, help="区间宽度来自 K 个扰动副本的逐格 std；越大越稳，耗时线性增长"))
+    touched = (perm_mult, poro_add, rate_mult, swi_add, lam_add) != (1.0, 0.0, 1.0, 0.0, 0.0)
+
+    if st.button("运行", type="primary"):
+        kappa, mb = float(rep["field_band"]["operating_kappa"]), rep["field_band"]["min_band"]
+        kw = dict(rep["perturb"]); kw["seed"] = 20261030 + 7919 * site
+        pcfg = PerturbConfig(**kw)
+        a_i = np.array(eng["a"][site], dtype=np.float32)
+        ref, conf, pol, q = live_reference(rep)
+
+        def run(x):
+            center = forward(eng, x)
+            rng = np.random.default_rng(pcfg.seed)
+            std = mc_band(np.stack([forward(eng, perturb_inputs(x, pcfg, rng)) for _ in range(K)]))[1]
+            m2 = x[:, :, 0, 0] != 0
+            ind = extract_indicators(center, m2)
+            return center, kappa * np.maximum(std, mb), m2, classify_site(ind, ref, pol, q=q, conf_ref=conf), ind.as_dict()
+
+        t0 = time.time()
+        base = run(a_i)
+        edit = run(edit_channels(a_i, perm_mult, poro_add, rate_mult, swi_add, lam_add)) if touched else base
+        st.session_state["sandbox"] = dict(
+            site=site, K=K, secs=time.time() - t0, frame=base[0].shape[-1] - 1,
+            base=base[:2] + base[3:], edit=edit[:2] + edit[3:], mask=base[2],
+            kappa=kappa, mb=mb, q=q, params=(perm_mult, poro_add, rate_mult, swi_add, lam_add))
+    res = st.session_state.get("sandbox")
+    if res is None or res["site"] != site or res["K"] != K:
+        st.info("点「运行」跑一次（1+K 次前向 × 底本与改参两组）。")
+        return
+    if res["params"] != (perm_mult, poro_add, rate_mult, swi_add, lam_add):
+        st.warning("参数已改动但还没重跑 —— 下面是上一次的结果。")
+
+    t = int(st.slider("输出时刻（帧）", 0, res["frame"], res["frame"]))
+    (bc, _bb, bcls, bind), (ec, eb, ecls, eind), m2 = res["base"], res["edit"], res["mask"]
+    show = m2[:, :, None]
+    mb, q = res["mb"], res["q"]
+    vmax = float(max(bc[:, :, t].max(), ec[:, :, t].max()))
+    fig, axes = plt.subplots(2, 2, figsize=(11, 7.5))
+    field_ax(axes[0][0], bc[:, :, t], m2, PLUME, "底本 · 预测饱和度", 0, vmax)
+    field_ax(axes[0][1], ec[:, :, t], m2, PLUME, "改参数后 · 预测饱和度", 0, vmax)
+    field_ax(axes[1][0], eb[:, :, t] * 2, m2, "magma",
+             f"改参数后 · 区间全宽（κ={res['kappa']:.2f}）")
+    days = physical_time_days(bc.shape[-1])
+    denom = max(int(m2.sum()), 1)
+    rb = ((np.abs(bc) > mb) & show).sum(axis=(0, 1)) / denom
+    re_ = ((np.abs(ec) > mb) & show).sum(axis=(0, 1)) / denom
+    axes[1][1].fill_between(days, re_ - q["areal"], re_ + q["areal"], alpha=.2, color="#1a5276")
+    axes[1][1].plot(days, rb, ls="--", lw=1.4, label="底本面积比")
+    axes[1][1].plot(days, re_, lw=1.8, label="改参数后面积比")
+    axes[1][1].set_xscale("log"); axes[1][1].set_xlabel("物理时间（天）")
+    axes[1][1].set_ylabel("羽流占储层面积比"); axes[1][1].legend(fontsize=8)
+    axes[1][1].set_title("面积比推进（阴影=±q(面积比)）", fontsize=10)
+    fig.subplots_adjust(hspace=.4, wspace=.25)
+    st.pyplot(fig); plt.close(fig)
+
+    def row(tag, cls, ind):
+        bt = "未突破" if np.isnan(ind["breakthrough_days"]) else f"{ind['breakthrough_days']:.0f}"
+        return {"来源": tag, "档位": TIER_CN[cls.level.name], "综合分位": f"{cls.score:.3f}",
+                "区间": f"[{cls.score_lo:.3f}, {cls.score_hi:.3f}]", "突破时间(天)": bt,
+                "末帧面积比": f"{ind['ratio_peak']:.3f}", "贴边界占比": f"{ind['lateral_share']:.3f}",
+                "掩膜外伪影": f"{ind['outside_share']:.4f}"}
+    st.caption(f"本次耗时 {res['secs']:.1f} s（{(1 + K) * (2 if touched else 1)} 次前向）")
+    st.dataframe(pd.DataFrame([row("底本（官方测试集该场地）", bcls, bind),
+                               row("改参数后", ecls, eind)]), hide_index=True, width="stretch")
+    for r in ecls.reasons:
+        (st.error if ecls.level.name == "RED" else st.info)(r)
+    if df is not None and not touched and res["site"] < len(df):
+        same = (abs(ecls.score - float(df.score[res["site"]])) < 2e-3
+                and ecls.level.name == df.tier_interval[res["site"]])
+        (st.success if same else st.warning)(
+            f"参数未改时，本页现场算出的分位/档位与跑批产物{'一致' if same else '不一致'}"
+            f"（现场 {ecls.score:.3f} / 跑批 {float(df.score[res['site']]):.3f}）—— "
+            "交互页和跑批是同一套判级代码。")
+    st.caption("边界：改过的参数组合可能落在训练分布之外，那时①~④页的精度指标不外推"
+               "（见第⑤页边界 4）。本页给的是"
+               "**在该参数假设下模型的输出、它自己的离散度与队列分位**，不是现场校准过的精度承诺。")
+
+
 def page_limits(rep):
     t, fb = rep["tiers"], rep["field_band"]
     st.header("边界与红线（答辩时主动说，别被问出来）")
@@ -272,8 +420,8 @@ def main():
         return
     fig_abs = os.path.join(ROOT, figdir) if not os.path.isabs(figdir) else figdir
     rep, z, df = data["rep"], data["z"], data["df"]
-    page = st.radio("页面", ["① 总览", "② 不确定性", "③ 场地浏览器", "④ 三级判级", "⑤ 边界与红线"],
-                    horizontal=True)
+    page = st.radio("页面", ["① 总览", "② 不确定性", "③ 场地浏览器", "④ 三级判级", "⑤ 边界与红线",
+                           "⑥ 参数沙盘（需本机权重）"], horizontal=True)
     if page.startswith("①"):
         page_overview(rep, fig_abs)
     elif page.startswith("②"):
@@ -282,8 +430,10 @@ def main():
         page_site(rep, z, df)
     elif page.startswith("④"):
         page_tiers(rep, df, fig_abs)
-    else:
+    elif page.startswith("⑤"):
         page_limits(rep)
+    else:
+        page_sandbox(rep, df)
 
 
 if __name__ == "__main__":
